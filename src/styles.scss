@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'bootstrap-icons';
+@use './variaveis' as *;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Boogaloo&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  font-family: 'Comic Relief', system-ui;
+  background-color: $fundo;
+  margin: 0;
+  line-height: inherit;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-family: 'Roboto Slab', sans-serif;
+}
+
+h2 {
+  font-family: 'Roboto Slab', sans-serif;
+}
+
+.barra {
+  width: 100%;
+}
+
+/* ===== Scrollbar CSS By stephenpaton-tech ===== */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: $primaria #ffffff00;
+}
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff00;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $primaria;
+  border-radius: 10px;
+  border: 3px solid #ffffff00;
+}

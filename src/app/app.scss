@@ -1,0 +1,71 @@
+@use '../_variaveis' as *;
+
+.main {
+  margin-inline: auto;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.25rem;
+}
+
+.main-content {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card {
+  color: $branco;
+  background: $superficie;
+  border: 1px solid $borda;
+  border-radius: 0.62rem;
+  padding: 0.94rem 2rem;
+  box-shadow: $sombra;
+  width: 110rem;
+  height: auto + 1;
+}
+
+@media (max-width: 1220px) {
+  .card {
+    max-width: 35rem;
+    padding: 0.94rem 2rem;
+  }
+}
+
+@media (max-width: 1092px) {
+  .card {
+    max-width: 35rem;
+    padding: 0.94rem 2rem;
+  }
+}
+
+@media (max-width: 982px) {
+  .main {
+    padding-inline: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem;
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin: 1rem auto;
+    padding-inline: 0.75rem;
+  }
+
+  .main-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+    width: auto;
+  }
+}

@@ -1,17 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TmdbService } from './services/tmdb-service';
+import { Navbar } from "./components/navbar/navbar";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App implements OnInit {
-  public readonly tmdbService = inject(TmdbService)
-
-  public ngOnInit(): void {
-    this.tmdbService.selectPopularMovies().subscribe((test) => console.log(test));
-  }
-}
+export class App {}
