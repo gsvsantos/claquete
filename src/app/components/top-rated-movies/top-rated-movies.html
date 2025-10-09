@@ -5,4 +5,11 @@
   [target]="targetType.NovaGuia"
   [variant]="variant.Outline"
 ></gs-buttons>
+
 <cqt-list-movies [movies$]="movies$"></cqt-list-movies>
+
+<gs-buttons
+  [tipo]="buttonType.Default"
+  texto="Carregar Mais"
+  (click)="loadMore()"
+></gs-buttons>

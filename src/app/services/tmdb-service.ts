@@ -12,11 +12,11 @@ export class TMDBService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl: string = 'https://api.themoviedb.org/3/movie';
 
-  public selectPopularMovies(): Observable<Movie[]> {
-    const popularUrl = `${this.baseUrl}/popular?language=en-US`;
+  public selectPopularMovies(pageIndex = 1): Observable<Movie[]> {
+    const fullUrl = `${this.baseUrl}/popular?language=en-US&page=${pageIndex}`;
 
     return this.http
-      .get<TMDBApiMovieResponse>(popularUrl, {
+      .get<TMDBApiMovieResponse>(fullUrl, {
         headers: { Authorization: environment.apiKey },
       })
       .pipe(
@@ -28,11 +28,11 @@ export class TMDBService {
       );
   }
 
-  public selectTopRatedMovies(): Observable<Movie[]> {
-    const popularUrl = `${this.baseUrl}/top_rated?language=en-US`;
+  public selectTopRatedMovies(pageIndex = 1): Observable<Movie[]> {
+    const fullUrl = `${this.baseUrl}/top_rated?language=en-US&page=${pageIndex}`;
 
     return this.http
-      .get<TMDBApiMovieResponse>(popularUrl, {
+      .get<TMDBApiMovieResponse>(fullUrl, {
         headers: { Authorization: environment.apiKey },
       })
       .pipe(
