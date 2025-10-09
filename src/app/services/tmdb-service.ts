@@ -53,7 +53,7 @@ export class TMDBService {
       title: obj.title,
       poster_path: obj.poster_path,
       release_date: obj.release_date,
-      vote_average: Math.round(obj.vote_average),
+      vote_average: (Math.round(obj.vote_average * 10)),
       overview: obj.overview,
     };
   }
