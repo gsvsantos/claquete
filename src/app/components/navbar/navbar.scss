@@ -1,15 +1,54 @@
 @use '../../../variaveis' as *;
 
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.sub-media {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.logo-link {
+  display: flex;
+  margin-right: 16px;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.logo-img {
+  height: 70px;
+}
+
 .navbar {
   display: flex;
   flex-direction: row;
   gap: 5rem;
   list-style-type: none;
-  padding-bottom: 0.5rem;
-  box-shadow: 0px 3px 2px -2px rgba(207, 207, 207, 0.753);
-  padding-left: 0;
-  padding-right: 0;
-  justify-content: space-evenly;
 }
 
 .nav-item {
@@ -24,7 +63,7 @@
 
   &:hover {
     color: $hover;
-  text-shadow:
+    text-shadow:
       0 0 1px $pagina-ativa-sombra,
       0 0 2px $pagina-ativa-sombra,
       0 0 2px $pagina-ativa-sombra;
@@ -34,9 +73,9 @@
 .pagina-atual {
   color: $pagina-ativa;
   text-shadow:
-      0 0 1px $pagina-ativa-sombra,
-      0 0 2px $pagina-ativa-sombra,
-      0 0 2px $pagina-ativa-sombra;
+    0 0 1px $pagina-ativa-sombra,
+    0 0 2px $pagina-ativa-sombra,
+    0 0 2px $pagina-ativa-sombra;
 }
 
 @media (max-width: 1280px) {

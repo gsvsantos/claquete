@@ -1,9 +1,12 @@
+@use '../../../variaveis' as *;
+
 .top-rated-movies {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: $superficie;
 }
 
 .btn-loadMore {
-    align-self: center;
+  align-self: center;
 }

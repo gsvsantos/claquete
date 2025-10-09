@@ -1,9 +1,9 @@
-export interface TMDBApiMovieResponse {
+export interface TMDBApiMovieListsResponse {
   page: number;
-  results: TMDBApiMovieDetailsResponse[];
+  results: TMDBApiMovieListsDetailsResponse[];
 }
 
-export interface TMDBApiMovieDetailsResponse{
+export interface TMDBApiMovieListsDetailsResponse {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];

@@ -1,1 +1,10 @@
-
+<div class="card">
+  <div class="popularMovies">
+    <h1>Top picks</h1>
+    <cqt-list-movies [movies$]="popularMovies$"></cqt-list-movies>
+  </div>
+  <div class="topRatedMovies">
+    <h1>Top Rated</h1>
+    <cqt-list-movies [movies$]="topRatedmovies$"></cqt-list-movies>
+  </div>
+</div>

@@ -30,7 +30,7 @@ export class PopularMovies implements OnInit {
       filter(() => !this.finalPageReached),
       exhaustMap(() =>
         this.tMDBService
-          .selectPopularMovies(this.pageIndex)
+          .selectPopularMovies(this.pageIndex, 18)
           .pipe(tap(() => (this.pageIndex += 1))),
       ),
     );
