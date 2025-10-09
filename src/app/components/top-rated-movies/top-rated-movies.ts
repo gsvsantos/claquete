@@ -6,7 +6,7 @@ import { Movie } from '../../models/movie';
 import { TMDBService } from '../../services/tmdb-service';
 
 @Component({
-  selector: 'cqt-top-rated-movies',
+  selector: 'clqt-top-rated-movies',
   imports: [ListMovies, GsButtons],
   templateUrl: './top-rated-movies.html',
   styleUrl: './top-rated-movies.scss',

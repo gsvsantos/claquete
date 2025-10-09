@@ -1,0 +1,13 @@
+@use '../../../variaveis' as *;
+
+.footer {
+    background-color: $fundo;
+    color: $texto-suave;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.logo-img {
+  height: 12px;
+}

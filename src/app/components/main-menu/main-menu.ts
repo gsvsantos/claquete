@@ -5,7 +5,7 @@ import { Movie } from '../../models/movie';
 import { TMDBService } from '../../services/tmdb-service';
 
 @Component({
-  selector: 'cqt-main-menu',
+  selector: 'clqt-main-menu',
   imports: [ListMovies],
   templateUrl: './main-menu.html',
   styleUrl: './main-menu.scss',

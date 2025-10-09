@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie';
 
 @Component({
-  selector: 'cqt-list-movies',
+  selector: 'clqt-list-movies',
   imports: [AsyncPipe],
   templateUrl: './list-movies.html',
   styleUrl: './list-movies.scss',
