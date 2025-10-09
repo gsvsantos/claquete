@@ -1,13 +1,21 @@
 <div class="main">
   <div class="movies-list">
     @for (movie of movies$ | async; track $index) {
-      <div class="movie">
+      <div class="movie-card">
         <img [src]="'https://image.tmdb.org/t/p/original/' + movie.poster_path" alt="" />
         <div class="text">
-          <span>{{ movie.title }}</span>
-          <span>Sinopse: {{ movie.overview }}</span>
-          <span>Lançamento: {{ movie.release_date }}</span>
-          <span>Média de Votos: {{ movie.vote_average }}</span>
+          <h1 class="title">{{ movie.title }}</h1>
+          <p class="sinopse">{{ movie.overview }}</p>
+          <div class="infos">
+            <div class="release-date">
+              <p>Lançamento:</p>
+              <span>{{ movie.release_date }}</span>
+            </div>
+            <div class="vote-average">
+              <p>Média de Votos:</p>
+              <span>{{ movie.vote_average }}</span>
+            </div>
+          </div>
         </div>
       </div>
     }

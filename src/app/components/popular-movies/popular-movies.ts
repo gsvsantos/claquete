@@ -26,7 +26,7 @@ export class PopularMovies implements OnInit {
 
   public ngOnInit(): void {
     const page$ = this.clickLoadMore$.pipe(
-      startWith(void 0),
+      startWith(void 1),
       filter(() => !this.finalPageReached),
       exhaustMap(() =>
         this.tMDBService

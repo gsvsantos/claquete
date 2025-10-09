@@ -21,9 +21,11 @@ export class TMDBService {
       })
       .pipe(
         map((obj) => {
-          return obj.results.map((result) => {
-            return this.mapMovie(result);
-          });
+          return obj.results
+            .map((result) => {
+              return this.mapMovie(result);
+            })
+            .slice(0, 18);
         }),
       );
   }
@@ -37,9 +39,11 @@ export class TMDBService {
       })
       .pipe(
         map((obj) => {
-          return obj.results.map((result) => {
-            return this.mapMovie(result);
-          });
+          return obj.results
+            .map((result) => {
+              return this.mapMovie(result);
+            })
+            .slice(0, 18);
         }),
       );
   }

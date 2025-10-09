@@ -1,15 +1,19 @@
-<gs-buttons
-  [tipo]="buttonType.Link"
-  texto="Voltar"
-  link="/"
-  [target]="targetType.NovaGuia"
-  [variant]="variant.Outline"
-></gs-buttons>
+<div class="top-rated-movies">
+  <gs-buttons
+    class="btn-back"
+    [tipo]="buttonType.Link"
+    texto="Voltar"
+    link="/"
+    [target]="targetType.NovaGuia"
+    [variant]="variant.Outline"
+  ></gs-buttons>
 
-<cqt-list-movies [movies$]="movies$"></cqt-list-movies>
+  <cqt-list-movies [movies$]="movies$"></cqt-list-movies>
 
-<gs-buttons
-  [tipo]="buttonType.Default"
-  texto="Carregar Mais"
-  (click)="loadMore()"
-></gs-buttons>
+  <gs-buttons
+    class="btn-loadMore"
+    [tipo]="buttonType.Default"
+    texto="Carregar Mais"
+    (click)="loadMore()"
+  ></gs-buttons>
+</div>
