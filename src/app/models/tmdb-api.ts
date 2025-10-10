@@ -1,9 +1,9 @@
-export interface TMDBApiMovieListsResponse {
+export interface TMDBApiMediaResponse {
   page: number;
-  results: TMDBApiMovieListsDetailsResponse[];
+  results: TMDBApiMediaDetailsResponse[];
 }
 
-export interface TMDBApiMovieListsDetailsResponse {
+export interface TMDBApiMediaDetailsResponse {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -13,8 +13,10 @@ export interface TMDBApiMovieListsDetailsResponse {
   overview: string;
   popularity: number;
   poster_path: string;
-  release_date: Date;
-  title: string;
+  release_date?: string;
+  first_air_date?: string;
+  title?: string;
+  name?: string;
   video: boolean;
   vote_average: number;
   vote_count: number;

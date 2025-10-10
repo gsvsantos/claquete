@@ -1,19 +1,19 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap, tap } from 'rxjs';
-import { Movie } from '../../models/movie';
+import { Media } from '../../models/media';
 import { GsButtons, gsTiposBotaoEnum, gsTiposGuiaEnum, gsVariant } from 'gs-buttons';
 import { TMDBService } from '../../services/tmdb-service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
-  selector: 'clqt-list-movies',
+  selector: 'clqt-list-medias',
   imports: [AsyncPipe, GsButtons],
-  templateUrl: './list-movies.html',
-  styleUrl: './list-movies.scss',
+  templateUrl: './list-medias.html',
+  styleUrl: './list-medias.scss',
 })
-export class ListMovies implements OnInit {
-  @Input() public movies$?: Observable<Movie[]>;
+export class ListMedias implements OnInit {
+  @Input() public medias$?: Observable<Media[]>;
   public buttonType = gsTiposBotaoEnum;
   public targetType = gsTiposGuiaEnum;
   public variant = gsVariant;
@@ -27,28 +27,31 @@ export class ListMovies implements OnInit {
   private readonly tMDBService = inject(TMDBService);
 
   public ngOnInit(): void {
-    this.movies$ = this.route.paramMap.pipe(
+    this.medias$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        const movieType = params.get('type');
+        const mediaType = params.get('mediaType');
+        const category = params.get('category');
 
-        if (!movieType) {
+        if (!mediaType) {
+          return of([]);
+        } else if (!category) {
           return of([]);
         }
 
         this.pageIndex = 1;
 
         const page$ = this.clickLoadMore$.pipe(
-          startWith(void 0),
+          startWith(void 1),
           filter(() => !this.finalPageReached),
           exhaustMap(() =>
             this.tMDBService
-              .selectMoviesByType(this.pageIndex, 18, movieType)
+              .selectMediasByType(mediaType, this.pageIndex, 18, category)
               .pipe(tap(() => (this.pageIndex += 1))),
           ),
         );
 
         return page$.pipe(
-          scan((accumulated, newPage) => [...accumulated, ...newPage], [] as Movie[]),
+          scan((accumulated, newPage) => [...accumulated, ...newPage], [] as Media[]),
         );
       }),
     );

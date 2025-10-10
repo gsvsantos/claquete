@@ -1,23 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Movie } from '../../models/movie';
+import { Media } from '../../models/media';
 import { TMDBService } from '../../services/tmdb-service';
-import { CarouselMovies } from '../carousel-movies/carousel-movies';
+import { Carousel } from '../carousel/carousel';
 
 @Component({
   selector: 'clqt-main-menu',
-  imports: [CarouselMovies],
+  imports: [Carousel],
   templateUrl: './main-menu.html',
   styleUrl: './main-menu.scss',
 })
 export class MainMenu {
-  public popularMovies$?: Observable<Movie[]>;
-  public topRatedmovies$?: Observable<Movie[]>;
+  public popularMovies$?: Observable<Media[]>;
+  public popularTVShows$?: Observable<Media[]>;
 
   private readonly quantity = 12;
   private readonly tMDBService = inject(TMDBService);
 
   public ngOnInit(): void {
-    this.popularMovies$ = this.tMDBService.selectMoviesByType(1, this.quantity, 'popular');
+    this.popularMovies$ = this.tMDBService.selectMediasByType('movie', 1, this.quantity, 'popular');
+    this.popularTVShows$ = this.tMDBService.selectMediasByType('tv', 1, this.quantity, 'popular')
   }
 }

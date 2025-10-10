@@ -2,59 +2,71 @@
   <div class="content">
     <div class="sub-media">
       <div class="nav-wrapper">
-        <a class="logo-link" routerLink="/main-menu" routerLinkActive="pagina-atual"
+        <a class="logo-link" routerLink="/main-menu"
           ><img class="logo-img" src="clqt.svg" alt="Claquete (CLQT)"
         /></a>
         <ul class="navbar">
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-btn"
-              [routerLink]="['/movies']"
-              routerLinkActive="pagina-atual"
-              >Movies</a
-            >
+            <a class="nav-link dropdown-btn">Movies</a>
             <div class="dropdown-content">
               <a
                 class="nav-link"
-                [routerLink]="['/movies', 'popular']"
+                routerLink="/movie/all"
+                routerLinkActive="pagina-atual"
+                [routerLinkActiveOptions]="{ exact: true }"
+                >All Movies</a
+              >
+              <a
+                class="nav-link"
+                [routerLink]="['/movie', 'popular']"
                 routerLinkActive="pagina-atual"
                 >Popular</a
               >
               <a
                 class="nav-link"
-                [routerLink]="['/movies', 'now_playing']"
+                [routerLink]="['/movie', 'now_playing']"
                 routerLinkActive="pagina-atual"
                 >Now Playing Movies</a
               >
               <a
                 class="nav-link"
-                [routerLink]="['/movies', 'upcoming']"
+                [routerLink]="['/movie', 'upcoming']"
                 routerLinkActive="pagina-atual"
                 >Upcoming Movies</a
               >
               <a
                 class="nav-link"
-                [routerLink]="['/movies', 'top_rated']"
+                [routerLink]="['/movie', 'top_rated']"
                 routerLinkActive="pagina-atual"
                 >Top Rated</a
               >
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-btn" [routerLink]="['/tv']" routerLinkActive="pagina-atual"
+            <a class="nav-link dropdown-btn"
               >TV Shows</a
             >
             <div class="dropdown-content">
+              <a
+                class="nav-link"
+                routerLink="/tv/all"
+                routerLinkActive="pagina-atual"
+                [routerLinkActiveOptions]="{ exact: true }"
+                >All TV Shows</a
+              >
               <a class="nav-link" [routerLink]="['/tv', 'popular']" routerLinkActive="pagina-atual"
                 >Popular</a
               >
               <a
                 class="nav-link"
-                [routerLink]="['/tv', 'now_playing']"
+                [routerLink]="['/tv', 'airing_today']"
                 routerLinkActive="pagina-atual"
                 >Airing Today</a
               >
-              <a class="nav-link" [routerLink]="['/tv', 'upcoming']" routerLinkActive="pagina-atual"
+              <a
+                class="nav-link"
+                [routerLink]="['/tv', 'on_the_air']"
+                routerLinkActive="pagina-atual"
                 >On TV</a
               >
               <a

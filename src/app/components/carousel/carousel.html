@@ -10,17 +10,17 @@
   </button>
 
   <div class="movies-carousel" #carousel>
-    @for (movie of movies$ | async; track $index) {
+    @for (media of medias$ | async; track $index) {
       <div class="movie-card">
-        <img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="" />
+        <img [src]="'https://image.tmdb.org/t/p/w500/' + media.poster_path" alt="" />
         <div class="text">
-          <h1 class="title">{{ movie.title }}</h1>
+          <h1 class="title">{{ media.title ?? media.name }}</h1>
           <div class="infos">
             <div class="vote-average">
-              <span><i class="bi bi-star-fill"></i> {{ movie.vote_average }}%</span>
+              <span><i class="bi bi-star-fill"></i> {{ media.vote_average }}%</span>
             </div>
             <div class="release-date">
-              <span>{{ movie.release_date }}</span>
+              <span>{{ media.release_date ?? media.first_air_date }}</span>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@
   align-self: center;
 }
 
-.movies-list {
+.list {
   display: grid;
   grid-template-columns: repeat(6, 240px);
   justify-content: center;
@@ -19,7 +19,7 @@
   height: 100%;
 }
 
-.movie-card {
+.card {
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -33,7 +33,7 @@
   }
 }
 
-.movie-card img {
+.card img {
   width: 240px;
 }
 

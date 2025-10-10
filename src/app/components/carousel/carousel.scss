@@ -10,19 +10,12 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
-  height: 100%;
   width: 100%;
-  overflow-x: auto;
-  scroll-behavior: smooth;
   padding: 0 70px;
-}
-
-* {
-  scrollbar-width: none;
-}
-
-.movies-carousel::-webkit-scrollbar {
-  display: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .movie-card {
