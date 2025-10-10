@@ -1,0 +1,19 @@
+@use '../../../variaveis' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: $superficie;
+}
+
+.popularMovies,
+.topRatedMovies {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.popularMovies h1,
+.topRatedMovies h1 {
+  align-self: center;
+}

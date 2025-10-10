@@ -1,5 +1,15 @@
 <div class="main">
-  <div class="movies-list">
+  <button
+    class="nav-button prev-button"
+    clqt-hover-scroll
+    [scrollTarget]="carouselRef"
+    scrollDirection="left"
+    [scrollDelta]="265"
+  >
+    &lt;
+  </button>
+
+  <div class="movies-carousel" #carousel>
     @for (movie of movies$ | async; track $index) {
       <div class="movie-card">
         <img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="" />
@@ -7,7 +17,7 @@
           <h1 class="title">{{ movie.title }}</h1>
           <div class="infos">
             <div class="vote-average">
-              <span><i class="bi bi-star-fill"></i>{{ movie.vote_average }}%</span>
+              <span><i class="bi bi-star-fill"></i> {{ movie.vote_average }}%</span>
             </div>
             <div class="release-date">
               <span>{{ movie.release_date }}</span>
@@ -17,4 +27,14 @@
       </div>
     }
   </div>
+
+  <button
+    class="nav-button next-button"
+    clqt-hover-scroll
+    [scrollTarget]="carouselRef"
+    scrollDirection="right"
+    [scrollDelta]="265"
+  >
+    &gt;
+  </button>
 </div>
