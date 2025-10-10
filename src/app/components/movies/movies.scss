@@ -3,17 +3,18 @@
 .card {
   display: flex;
   flex-direction: column;
-  background-color: $superficie;
+  background: $gradient-background;
 }
 
 .popularMovies,
-.topRatedMovies {
+.topRatedMovies,
+.upcomingMovies,
+.nowPlayingMovies {
   display: flex;
   flex-direction: column;
   padding: 10px;
-}
 
-.popularMovies h1,
-.topRatedMovies h1 {
-  align-self: center;
+  h1 {
+    align-self: center;
+  }
 }

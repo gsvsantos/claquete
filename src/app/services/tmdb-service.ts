@@ -15,24 +15,28 @@ export class TMDBService {
   public selectPopularMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
     const fullUrl = `${this.baseUrl}/popular?language=en-US&page=${pageIndex}`;
 
-    return this.http
-      .get<TMDBApiMovieListsResponse>(fullUrl, {
-        headers: { Authorization: environment.apiKey },
-      })
-      .pipe(
-        map((obj) => {
-          return obj.results
-            .map((result) => {
-              return this.mapMovie(result);
-            })
-            .slice(0, quantity);
-        }),
-      );
+    return this.mapList(fullUrl, quantity);
   }
 
   public selectTopRatedMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
     const fullUrl = `${this.baseUrl}/top_rated?language=en-US&page=${pageIndex}`;
 
+    return this.mapList(fullUrl, quantity);
+  }
+
+  public selectUpcomingMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
+    const fullUrl = `${this.baseUrl}/upcoming?language=en-US&page=${pageIndex}`;
+
+    return this.mapList(fullUrl, quantity);
+  }
+
+  public selectNowPlayingMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
+    const fullUrl = `${this.baseUrl}/now_playing?language=en-US&page=${pageIndex}`;
+
+    return this.mapList(fullUrl, quantity);
+  }
+
+  private mapList(fullUrl: string, quantity: number): Observable<Movie[]> {
     return this.http
       .get<TMDBApiMovieListsResponse>(fullUrl, {
         headers: { Authorization: environment.apiKey },
@@ -53,7 +57,7 @@ export class TMDBService {
       title: obj.title,
       poster_path: obj.poster_path,
       release_date: obj.release_date,
-      vote_average: (Math.round(obj.vote_average * 10)),
+      vote_average: Math.round(obj.vote_average * 10),
       overview: obj.overview,
     };
   }

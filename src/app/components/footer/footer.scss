@@ -1,7 +1,7 @@
 @use '../../../variaveis' as *;
 
 .footer {
-    background-color: $fundo;
+    background: $gradient-footer;
     color: $texto-suave;
     padding: 1rem;
     text-align: center;

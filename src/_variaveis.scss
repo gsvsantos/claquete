@@ -8,7 +8,7 @@ $hover: lighten($primaria, 18%);
 $fundo: #032541;
 $superficie: #003554;
 $superficie-destaque: #004d74;
-$borda: #03273c;
+$borda: #0f5b86;
 $texto-principal: $branco;
 $texto-suave: mix($branco, $superficie, 85%); 
 $texto-invertido: #000000;
@@ -23,16 +23,9 @@ $transicao-rapida: 0.2s ease;
 $transicao: 0.25s ease;
 $transicao-lenta: 0.5s ease-in-out;
 
-$gradient-onyx: linear-gradient(
-  to bottom right,
-  #03273c 3%,
-  #004d74 26%,
-  #006da4 52%,
-  #003554 74%,
-  #006494 90%,
-  #051720 97%
-);
-$gradient-teste: linear-gradient(45deg, #03273c, #004d74, #006da4, #003554, #006494, #051720);
-$gradient-destaque: linear-gradient(90deg, lighten(#006da4, 6%), #006494 60%);
-$gradient-sidebar: linear-gradient(45deg, #004d74, #006da4);
+$gradient-background: linear-gradient(160deg, #021018, #08324f);
+$gradient-destaque: linear-gradient(90deg, #103750, #0e4c79);
+$gradient-navbar: linear-gradient(90deg, #052030, #05273a);
+$gradient-footer: linear-gradient(90deg, #071e2e, #052236);
+
 $sidebar-borda-largura: 3px;

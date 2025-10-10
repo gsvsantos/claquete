@@ -12,6 +12,6 @@ export const routes: Routes = [
   },
   { path: 'main-menu', component: MainMenu },
   { path: 'movies', component: Movies },
-  { path: 'popular', component: PopularMovies },
-  { path: 'top-rated', component: TopRatedMovies },
+  { path: 'movies/popular', component: PopularMovies },
+  { path: 'movies/top-rated', component: TopRatedMovies },
 ];
