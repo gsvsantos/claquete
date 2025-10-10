@@ -1,10 +1,10 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { exhaustMap, filter, Observable, scan, startWith, Subject, tap } from 'rxjs';
+import { exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap, tap } from 'rxjs';
 import { Movie } from '../../models/movie';
 import { GsButtons, gsTiposBotaoEnum, gsTiposGuiaEnum, gsVariant } from 'gs-buttons';
 import { TMDBService } from '../../services/tmdb-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'clqt-list-movies',
@@ -27,20 +27,31 @@ export class ListMovies implements OnInit {
   private readonly tMDBService = inject(TMDBService);
 
   public ngOnInit(): void {
-    const movieType = this.route.snapshot.paramMap.get('type');
-    console.log(movieType);
+    this.movies$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        const movieType = params.get('type');
 
-    const page$ = this.clickLoadMore$.pipe(
-      startWith(void 1),
-      filter(() => !this.finalPageReached),
-      exhaustMap(() =>
-        this.tMDBService
-          .selectMoviesByType(this.pageIndex, 18, movieType as string)
-          .pipe(tap(() => (this.pageIndex += 1))),
-      ),
+        if (!movieType) {
+          return of([]);
+        }
+
+        this.pageIndex = 1;
+
+        const page$ = this.clickLoadMore$.pipe(
+          startWith(void 0),
+          filter(() => !this.finalPageReached),
+          exhaustMap(() =>
+            this.tMDBService
+              .selectMoviesByType(this.pageIndex, 18, movieType)
+              .pipe(tap(() => (this.pageIndex += 1))),
+          ),
+        );
+
+        return page$.pipe(
+          scan((accumulated, newPage) => [...accumulated, ...newPage], [] as Movie[]),
+        );
+      }),
     );
-
-    this.movies$ = page$.pipe(scan((accumulated, newPage) => [...accumulated, ...newPage]));
   }
 
   public loadMore(): void {
