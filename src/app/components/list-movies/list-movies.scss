@@ -1,5 +1,16 @@
 @use '../../../variaveis' as *;
 
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: $gradient-background;
+}
+
+.btn-loadMore {
+  align-self: center;
+}
+
 .movies-list {
   display: grid;
   grid-template-columns: repeat(6, 240px);

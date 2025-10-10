@@ -1,4 +1,12 @@
 <div class="main">
+  <gs-buttons
+    class="btn-back"
+    [tipo]="buttonType.Link"
+    texto="Voltar"
+    link="/"
+    [target]="targetType.NovaGuia"
+    [variant]="variant.Outline"
+  ></gs-buttons>
   <div class="movies-list">
     @for (movie of movies$ | async; track $index) {
       <div class="movie-card">
@@ -17,4 +25,10 @@
       </div>
     }
   </div>
+  <gs-buttons
+    class="btn-loadMore"
+    [tipo]="buttonType.Default"
+    texto="Carregar Mais"
+    (click)="loadMore()"
+  ></gs-buttons>
 </div>

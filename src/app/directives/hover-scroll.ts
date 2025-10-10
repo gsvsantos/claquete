@@ -6,7 +6,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
   selector: '[clqt-hover-scroll]',
 })
 export class HoverScroll implements OnInit, OnDestroy {
-  @Input({ required: true }) public scrollTarget!: ElementRef<HTMLElement>;
+  @Input() public scrollTarget!: ElementRef<HTMLElement>;
   @Input() public scrollDelta: number = 300;
   @Input() public scrollDirection: 'left' | 'right' = 'left';
   @Input() public scrollInterval: number = 750;

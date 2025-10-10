@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainMenu } from './components/main-menu/main-menu';
-import { PopularMovies } from './components/popular-movies/popular-movies';
-import { TopRatedMovies } from './components/top-rated-movies/top-rated-movies';
 import { Movies } from './components/movies/movies';
+import { ListMovies } from './components/list-movies/list-movies';
 
 export const routes: Routes = [
   {
@@ -12,6 +11,5 @@ export const routes: Routes = [
   },
   { path: 'main-menu', component: MainMenu },
   { path: 'movies', component: Movies },
-  { path: 'movies/popular', component: PopularMovies },
-  { path: 'movies/top-rated', component: TopRatedMovies },
+  { path: 'movies/:type', component: ListMovies },
 ];

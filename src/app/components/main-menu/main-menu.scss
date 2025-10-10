@@ -3,7 +3,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  background-color: $superficie;
+  background: $gradient-background;
 }
 
 .popularMovies,

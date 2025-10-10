@@ -12,26 +12,8 @@ export class TMDBService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl: string = 'https://api.themoviedb.org/3/movie';
 
-  public selectPopularMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
-    const fullUrl = `${this.baseUrl}/popular?language=en-US&page=${pageIndex}`;
-
-    return this.mapList(fullUrl, quantity);
-  }
-
-  public selectTopRatedMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
-    const fullUrl = `${this.baseUrl}/top_rated?language=en-US&page=${pageIndex}`;
-
-    return this.mapList(fullUrl, quantity);
-  }
-
-  public selectUpcomingMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
-    const fullUrl = `${this.baseUrl}/upcoming?language=en-US&page=${pageIndex}`;
-
-    return this.mapList(fullUrl, quantity);
-  }
-
-  public selectNowPlayingMovies(pageIndex = 1, quantity: number): Observable<Movie[]> {
-    const fullUrl = `${this.baseUrl}/now_playing?language=en-US&page=${pageIndex}`;
+  public selectMoviesByType(pageIndex = 1, quantity = 20, type: string): Observable<Movie[]> {
+    const fullUrl = `${this.baseUrl}/${type}?language=en-US&page=${pageIndex}`;
 
     return this.mapList(fullUrl, quantity);
   }

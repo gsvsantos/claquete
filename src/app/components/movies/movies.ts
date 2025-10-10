@@ -22,9 +22,9 @@ export class Movies {
   private readonly tMDBService = inject(TMDBService);
 
   public ngOnInit(): void {
-    this.popularMovies$ = this.tMDBService.selectPopularMovies(1, this.quantity);
-    this.topRatedMovies$ = this.tMDBService.selectTopRatedMovies(1, this.quantity);
-    this.upcomingMovies$ = this.tMDBService.selectUpcomingMovies(1, this.quantity);
-    this.nowPlayingMovies$ = this.tMDBService.selectNowPlayingMovies(1, this.quantity);
+    this.popularMovies$ = this.tMDBService.selectMoviesByType(1, this.quantity, 'popular');
+    this.topRatedMovies$ = this.tMDBService.selectMoviesByType(1, this.quantity, 'top_rated');
+    this.upcomingMovies$ = this.tMDBService.selectMoviesByType(1, this.quantity, 'upcoming');
+    this.nowPlayingMovies$ = this.tMDBService.selectMoviesByType(1, this.quantity, 'now_playing');
   }
 }
