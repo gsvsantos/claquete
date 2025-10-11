@@ -1,0 +1,27 @@
+<div class="teste">
+  @if (media) {
+    <div class="card">
+      <img
+        class="poster"
+        [src]="'https://image.tmdb.org/t/p/w500/' + media.poster_path"
+        [alt]="media.title ?? media.name"
+        loading="lazy"
+      />
+
+      <div class="text">
+        <h1 class="title">{{ media.title ?? media.name }}</h1>
+
+        <div class="infos">
+          <div class="vote-average">
+            <i class="bi bi-star-fill"></i>
+            <span>{{ media.vote_average | tmdbPercent }}</span>
+          </div>
+
+          <div class="release-date">
+            <span>{{ media.release_date ?? media.first_air_date | date: 'yyyy-MM-dd' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

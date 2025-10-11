@@ -6,70 +6,16 @@
   align-items: center;
 }
 
-.movies-carousel {
+.medias-carousel {
   display: flex;
   flex-direction: row;
   gap: 20px;
   width: 100%;
-  padding: 0 70px;
+  padding: 10px 70px;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-}
-
-.movie-card {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 240px;
-  overflow: hidden;
-  background: $superficie-destaque;
-  border: $sidebar-borda-largura solid $borda;
-  border-radius: 1.25rem;
-  transition: $transicao-rapida;
-
-  &:hover {
-    transform: scale(1.01);
-  }
-}
-
-.text {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 10px;
-  word-wrap: break-word;
-  padding: 4px 10px 10px 10px;
-  overflow-wrap: break-word;
-}
-
-.title {
-  font-size: medium;
-  align-self: center;
-}
-
-.infos {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: flex-end;
-  padding: 0;
-}
-
-.release-date,
-.vote-average {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-
-  p {
-    font-weight: bold;
-  }
-}
-
-.bi-star-fill {
-  color: yellow;
 }
 
 .nav-button {

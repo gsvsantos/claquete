@@ -41,7 +41,7 @@ export class TMDBService {
       poster_path: obj.poster_path,
       release_date: obj.release_date,
       first_air_date: obj.first_air_date,
-      vote_average: Math.round(obj.vote_average * 10),
+      vote_average: obj.vote_average,
       overview: obj.overview,
     };
   }

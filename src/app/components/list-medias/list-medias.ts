@@ -2,20 +2,21 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap, tap } from 'rxjs';
 import { Media } from '../../models/media';
-import { GsButtons, gsTiposBotaoEnum, gsTiposGuiaEnum, gsVariant } from 'gs-buttons';
+import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { TMDBService } from '../../services/tmdb-service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MediaCard } from '../media-card/media-card';
 
 @Component({
   selector: 'clqt-list-medias',
-  imports: [AsyncPipe, GsButtons],
+  imports: [AsyncPipe, GsButtons, MediaCard],
   templateUrl: './list-medias.html',
   styleUrl: './list-medias.scss',
 })
 export class ListMedias implements OnInit {
   @Input() public medias$?: Observable<Media[]>;
-  public buttonType = gsTiposBotaoEnum;
-  public targetType = gsTiposGuiaEnum;
+  public buttonType = gsButtonTypeEnum;
+  public targetType = gsTabTargetEnum;
   public variant = gsVariant;
   public get finalPageReached(): boolean {
     return this.pageIndex >= 520;

@@ -3,10 +3,10 @@
     <div class="sub-media">
       <div class="nav-wrapper">
         <a class="logo-link" routerLink="/main-menu"
-          ><img class="logo-img" src="clqt.svg" alt="Claquete (CLQT)"
+          ><img class="logo-img" src="svg/clqt.svg" alt="Claquete (CLQT)"
         /></a>
         <ul class="navbar">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" routerLinkActive="pagina-atual">
             <a class="nav-link dropdown-btn">Movies</a>
             <div class="dropdown-content">
               <a
@@ -14,7 +14,7 @@
                 routerLink="/movie/all"
                 routerLinkActive="pagina-atual"
                 [routerLinkActiveOptions]="{ exact: true }"
-                >All Movies</a
+                >All Categories</a
               >
               <a
                 class="nav-link"
@@ -42,17 +42,15 @@
               >
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-btn"
-              >TV Shows</a
-            >
+          <li class="nav-item dropdown" routerLinkActive="pagina-atual">
+            <a class="nav-link dropdown-btn">TV Shows</a>
             <div class="dropdown-content">
               <a
                 class="nav-link"
                 routerLink="/tv/all"
                 routerLinkActive="pagina-atual"
                 [routerLinkActiveOptions]="{ exact: true }"
-                >All TV Shows</a
+                >All Categories</a
               >
               <a class="nav-link" [routerLink]="['/tv', 'popular']" routerLinkActive="pagina-atual"
                 >Popular</a

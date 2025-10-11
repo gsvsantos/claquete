@@ -3,10 +3,11 @@ import { Observable } from 'rxjs';
 import { Media } from '../../models/media';
 import { AsyncPipe } from '@angular/common';
 import { HoverScroll } from '../../directives/hover-scroll';
+import { MediaCard } from "../media-card/media-card";
 
 @Component({
   selector: 'clqt-carousel',
-  imports: [AsyncPipe, HoverScroll],
+  imports: [AsyncPipe, HoverScroll, MediaCard],
   templateUrl: './carousel.html',
   styleUrl: './carousel.scss',
 })

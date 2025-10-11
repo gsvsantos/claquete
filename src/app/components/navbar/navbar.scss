@@ -127,6 +127,15 @@
     0 0 2px $pagina-ativa-sombra;
 }
 
+.nav-item.dropdown.pagina-atual > .dropdown-btn {
+  color: $pagina-ativa;
+  font-weight: 600;
+  text-shadow:
+    0 0 1px $pagina-ativa-sombra,
+    0 0 2px $pagina-ativa-sombra,
+    0 0 2px $pagina-ativa-sombra;
+}
+
 @media (max-width: 1280px) {
   .navbar {
     flex-wrap: wrap;

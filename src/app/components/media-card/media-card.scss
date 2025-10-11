@@ -1,0 +1,64 @@
+@use '../../../variaveis' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 470px;
+  overflow: hidden;
+  background: $gradient-destaque;
+  border: $sidebar-borda-largura solid $borda;
+  border-radius: 1.25rem;
+  transition: $transicao-rapida;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  >.poster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 8px 12px 12px;
+}
+
+.title {
+  display: -webkit-box;
+  font-size: medium;
+  margin: 6px 0 8px;
+  overflow: hidden;
+  align-self: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.infos {
+  display: grid;
+  margin-top: auto;
+  gap: 6px;
+}
+
+.release-date,
+.vote-average {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  p,
+  span {
+    font-weight: bold;
+  }
+}
+
+.bi-star-fill {
+  color: yellow;
+}

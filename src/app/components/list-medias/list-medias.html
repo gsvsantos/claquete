@@ -1,34 +1,21 @@
 <div class="main">
   <gs-buttons
     class="btn-back"
-    [tipo]="buttonType.Link"
-    texto="Voltar"
-    link="/"
-    [target]="targetType.NovaGuia"
+    [buttonType]="buttonType.Link"
+    text="Voltar"
+    [link]="['/movie', 'popular']"
+    [target]="targetType.NewTab"
     [variant]="variant.Outline"
   ></gs-buttons>
-  <div class="list">
+  <div class="medias-list">
     @for (media of medias$ | async; track $index) {
-      <div class="card">
-        <img [src]="'https://image.tmdb.org/t/p/w500/' + media.poster_path" alt="" />
-        <div class="text">
-          <h1 class="title">{{ media.title ?? media.name}}</h1>
-          <div class="infos">
-            <div class="vote-average">
-              <span><i class="bi bi-star-fill"></i>{{ media.vote_average }}%</span>
-            </div>
-            <div class="release-date">
-              <span>{{ media.release_date ?? media.first_air_date }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <clqt-media-card [media]="media"></clqt-media-card>
     }
   </div>
   <gs-buttons
     class="btn-loadMore"
-    [tipo]="buttonType.Default"
-    texto="Carregar Mais"
+    [buttonType]="buttonType.Default"
+    text="Carregar Mais"
     (click)="loadMore()"
   ></gs-buttons>
 </div>
