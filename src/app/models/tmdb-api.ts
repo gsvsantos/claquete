@@ -100,10 +100,10 @@ export interface TMDBApiEpisode {
   overview: string;
   vote_average: number;
   vote_count: number;
-  air_date: string | null; 
+  air_date: string | null;
   episode_number: number;
   episode_type?: string;
-  production_code: string | null; 
+  production_code: string | null;
   runtime: number | null;
   season_number: number;
   show_id: number;
@@ -141,6 +141,7 @@ export interface TMDBApiMediaListDetailsResponse {
   backdrop_path: TMDBImagePath;
   genre_ids: number[];
   id: number;
+  origin_country?: string[];
   original_language: string;
   original_title?: string;
   original_name?: string;
@@ -153,6 +154,7 @@ export interface TMDBApiMediaListDetailsResponse {
   name?: string;
   video?: boolean;
   vote_average: number;
+  vote_count: number;
 }
 
 // Movie & TV Show
@@ -180,7 +182,7 @@ export interface TMDBApiMediaDetailsResponse {
   budget?: number;
   imdb_id?: string | null;
   original_title?: string;
-  release_date?: string | null; 
+  release_date?: string | null;
   revenue?: number;
   runtime?: number | null;
   title?: string;
@@ -189,7 +191,7 @@ export interface TMDBApiMediaDetailsResponse {
   // TV_Show-only
   created_by?: TMDBApiCreatedBy[];
   episode_run_time?: number[];
-  first_air_date?: string | null; 
+  first_air_date?: string | null;
   in_production?: boolean;
   languages?: string[];
   last_air_date?: string | null;
@@ -206,4 +208,46 @@ export interface TMDBApiMediaDetailsResponse {
   // Appendables
   videos?: TMDBApiVideos;
   credits?: TMDBApiCredits;
+}
+
+export type TMDBApiMediaSearchType = 'movie' | 'tv' | 'person';
+
+export interface TMDBApiSearchMovieResult {
+  media_type: 'movie';
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: TMDBImagePath;
+  release_date: string | null;
+  vote_average: number;
+}
+
+export interface TMDBApiSearchTvResult {
+  media_type: 'tv';
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: TMDBImagePath;
+  first_air_date: string | null;
+  vote_average: number;
+}
+
+export interface TMDBApiSearchPersonResult {
+  media_type: 'person';
+  id: number;
+  name: string;
+  profile_path: TMDBImagePath;
+  known_for_department?: string | null;
+}
+
+export type TMDBApiSearchResult =
+  | TMDBApiSearchMovieResult
+  | TMDBApiSearchTvResult
+  | TMDBApiSearchPersonResult;
+
+export interface TMDBApiSearchMultiResponse {
+  page: number;
+  results: TMDBApiSearchResult[];
+  total_pages: number;
+  total_results: number;
 }

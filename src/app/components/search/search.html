@@ -1,0 +1,37 @@
+<input
+  class="search-input"
+  [formControl]="searchControl"
+  placeholder="Busque filmes e séries..."
+  autocomplete="true"
+/>
+
+@if (isLoading$ | async) {
+  <p class="hint">Loading…</p>
+} @else if (isQueryTooShort$ | async) {
+  <p class="hint">Type at least {{ minimumLength }} chars.</p>
+}
+
+@if (showEmptyState$ | async) {
+  <ul class="results">
+    <li class="empty">Nothing found.</li>
+  </ul>
+} @else if (hasResults$ | async) {
+  <ul class="results">
+    @for (item of (viewItems$ | async)!; track item.id) {
+      <li class="result-item" [routerLink]="item.routerLink">
+        @if (item.posterUrl) {
+          <img class="poster" [src]="item.posterUrl" alt="" width="46" height="69" />
+        }
+        <div class="info">
+          <div class="title">
+            <strong>{{ item.title }}</strong>
+            <span class="badge">{{ item.mediaType === 'movie' ? 'Filme' : 'Série' }}</span>
+          </div>
+          @if (item.subtitle) {
+            <div class="subtitle">{{ item.subtitle }}</div>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+}

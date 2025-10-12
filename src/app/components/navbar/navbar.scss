@@ -1,11 +1,14 @@
 @use '../../../variaveis' as *;
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
-  justify-content: center;
-  background: $gradient-navbar;
-  width: 100%;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: $gradient-navbar;
   box-sizing: border-box;
 }
 
@@ -19,57 +22,55 @@
 
 .sub-media {
   display: flex;
-  width: 100%;
+  align-items: center;
   justify-content: space-between;
+  width: 100%;
   gap: 1rem;
   box-sizing: border-box;
+  min-height: 72px;
 }
 
 .nav-wrapper {
   display: flex;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
   align-items: center;
-  overflow: visible;
-  box-sizing: border-box;
+  gap: 1rem;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .logo-link {
   display: flex;
-  margin-right: 16px;
+  margin-right: 12px;
   font-weight: 600;
-  box-sizing: border-box;
 }
-
 .logo-img {
-  height: 70px;
+  height: 56px;
 }
 
 .navbar {
   display: flex;
   flex-direction: row;
-  gap: 5rem;
-  list-style-type: none;
+  gap: clamp(1rem, 2.5vw, 3rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-item {
-  font-size: larger;
-  font-weight: bold;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .nav-link {
   color: $texto-principal;
   text-decoration: none;
   transition: $transicao-rapida;
-
   &:hover {
     color: $hover;
     text-shadow:
       0 0 1px $pagina-ativa-sombra,
-      0 0 2px $pagina-ativa-sombra,
       0 0 2px $pagina-ativa-sombra;
   }
-
   & + .nav-link {
     margin-top: 4px;
   }
@@ -78,18 +79,27 @@
 .dropdown {
   position: relative;
 }
+.dropdown-btn {
+  cursor: default;
+}
 
 .dropdown-content {
   display: none;
   position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
   background: $superficie;
   min-width: 180px;
   padding: 8px;
   border-radius: 10px;
   border: 1px solid $borda;
   box-shadow: $sombra;
-  z-index: 2;
-  width: auto;
+  z-index: 10;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  display: block;
 }
 
 .dropdown-content .nav-link {
@@ -97,33 +107,22 @@
   padding: 10px 12px;
   border-radius: 8px;
   color: $texto-suave;
-
   &:hover,
   &:focus {
     color: $texto-principal;
     background: rgba($superficie-destaque, 0.9);
     transform: translateX(2px);
   }
-
   &.pagina-atual {
     color: $pagina-ativa;
     background: rgba($superficie-destaque, 0.55);
   }
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-content .nav-link:hover {
-  color: $texto-principal;
-}
-
 .pagina-atual {
   color: $pagina-ativa;
   text-shadow:
     0 0 1px $pagina-ativa-sombra,
-    0 0 2px $pagina-ativa-sombra,
     0 0 2px $pagina-ativa-sombra;
 }
 
@@ -132,25 +131,73 @@
   font-weight: 600;
   text-shadow:
     0 0 1px $pagina-ativa-sombra,
-    0 0 2px $pagina-ativa-sombra,
     0 0 2px $pagina-ativa-sombra;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 0 0 auto;
+}
+
+.search {
+  position: relative;
+  width: clamp(200px, 28vw, 360px);
+}
+
+.language-selector select,
+.language-select {
+  appearance: none;
+  background: $superficie;
+  color: $texto-principal;
+  border: 1px solid $borda;
+  border-radius: 8px;
+  height: 36px;
+  padding: 0 28px 0 10px;
+  line-height: 36px;
+  transition: $transicao-rapida;
+  &:hover {
+    border-color: lighten($borda, 8%);
+  }
+  &:focus {
+    outline: 2px solid $hover;
+    box-shadow: 0 0 0 3px rgba($primaria, 0.25);
+  }
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
 }
 
 @media (max-width: 1280px) {
   .navbar {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    padding: 0 0 8px 0;
-    justify-content: center;
+    gap: 1rem;
+  }
+  .search {
+    width: clamp(160px, 30vw, 280px);
   }
 }
 
 @media (max-width: 982px) {
-  .navbar {
+  .sub-media {
     flex-wrap: wrap;
-    gap: 0.75rem;
-    padding: 0 0 8px 0;
-    justify-content: center;
+    row-gap: 8px;
+  }
+  .nav-wrapper {
+    order: 0;
+    width: 100%;
+  }
+  .tools {
+    order: 1;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .search {
+    width: clamp(180px, 50vw, 320px);
   }
   .nav-item {
     font-size: 1rem;
@@ -159,9 +206,7 @@
 
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: wrap;
     gap: 0.75rem;
-    padding: 0 0 8px 0;
     justify-content: center;
   }
   .nav-item {
@@ -169,5 +214,8 @@
   }
   .dropdown-content {
     min-width: 160px;
+  }
+  .tools {
+    justify-content: space-between;
   }
 }

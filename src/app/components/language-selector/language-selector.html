@@ -1,0 +1,9 @@
+<select
+  class="language-select round"
+  [ngModel]="currentLanguage"
+  (ngModelChange)="onLanguageChange($event)"
+>
+  @for (language of availableLanguages; track language.code) {
+    <option [value]="language.code">{{ language.label }}</option>
+  }
+</select>
