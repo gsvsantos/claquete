@@ -3,6 +3,18 @@
 .main {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 12px 0 12px 0;
+}
+
+.media-link {
+  color: $texto-principal;
+  text-decoration: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   background: $gradient-background;
 }
@@ -14,7 +26,6 @@
 .medias-list {
   display: grid;
   grid-template-columns: repeat(6, 240px);
-  justify-content: center;
   gap: 20px;
   height: 100%;
 }

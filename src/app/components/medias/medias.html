@@ -1,29 +1,29 @@
 <div class="card">
   <div class="popularMovies">
     <h1>Popular</h1>
-    <clqt-carousel [medias$]="popularMedias$"></clqt-carousel>
+    <clqt-carousel [medias$]="popularMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
   </div>
   <div class="topRatedMovies">
     <h1>Top Rated</h1>
-    <clqt-carousel [medias$]="topRatedMedias$"></clqt-carousel>
+    <clqt-carousel [medias$]="topRatedMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
   </div>
   @if ((mediaType$ | async) === 'movie') {
     <div class="upcomingMovies">
       <h1>Upcoming</h1>
-      <clqt-carousel [medias$]="upcomingMedias$"></clqt-carousel>
+      <clqt-carousel [medias$]="upcomingMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
     </div>
     <div class="nowPlayingMovies">
       <h1>Now Playing</h1>
-      <clqt-carousel [medias$]="nowPlayingMedias$"></clqt-carousel>
+      <clqt-carousel [medias$]="nowPlayingMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
     </div>
   } @else {
     <div class="upcomingMovies">
       <h1>Airing</h1>
-      <clqt-carousel [medias$]="airingTodayMedias$"></clqt-carousel>
+      <clqt-carousel [medias$]="airingTodayMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
     </div>
     <div class="upcomingMovies">
       <h1>On Air</h1>
-      <clqt-carousel [medias$]="onTheAirMedias$"></clqt-carousel>
+      <clqt-carousel [medias$]="onTheAirMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
     </div>
   }
 </div>

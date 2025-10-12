@@ -18,7 +18,7 @@ export class MainMenu {
   private readonly tMDBService = inject(TMDBService);
 
   public ngOnInit(): void {
-    this.popularMovies$ = this.tMDBService.selectMediasByType('movie', 1, this.quantity, 'popular');
-    this.popularTVShows$ = this.tMDBService.selectMediasByType('tv', 1, this.quantity, 'popular')
+    this.popularMovies$ = this.tMDBService.getMediasByType('movie', 1, this.quantity, 'popular');
+    this.popularTVShows$ = this.tMDBService.getMediasByType('tv', 1, this.quantity, 'popular')
   }
 }

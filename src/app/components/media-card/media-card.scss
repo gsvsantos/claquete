@@ -14,8 +14,12 @@
   &:hover {
     transform: scale(1.01);
   }
+  
+  &:hover .title {
+    color: $hover-titulo;
+  }
 
-  >.poster {
+  > .poster {
     width: 100%;
     aspect-ratio: 2 / 3;
     object-fit: cover;
@@ -39,6 +43,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+  transition: $transicao-rapida;
 }
 
 .infos {

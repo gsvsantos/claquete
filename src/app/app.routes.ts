@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainMenu } from './components/main-menu/main-menu';
 import { Medias as Medias } from './components/medias/medias';
 import { ListMedias } from './components/list-medias/list-medias';
+import { MediaDetails } from './components/media-details/media-details';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'main-menu', component: MainMenu },
   { path: ':mediaType/all', component: Medias },
   { path: ':mediaType/:category', component: ListMedias },
+  { path: ':mediaType/details/:id', component: MediaDetails },
   {
     path: '**',
     redirectTo: 'main-menu', // 404

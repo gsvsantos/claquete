@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Media } from '../../models/media';
-import { TmdbPercentPipe } from "../../pipes/tmdb-percent-pipe";
+import { TmdbPercentPipe } from '../../pipes/tmdb-percent-pipe';
 import { DatePipe } from '@angular/common';
 
 @Component({

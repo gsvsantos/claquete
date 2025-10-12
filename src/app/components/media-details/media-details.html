@@ -1,0 +1,127 @@
+<div class="main">
+  <div class="content">
+    @if (mediaDetails$ | async; as mediaDetails) {
+      <div class="card">
+        <img
+          class="poster"
+          [src]="'https://image.tmdb.org/t/p/original/' + mediaDetails.poster_path"
+          [alt]="mediaDetails.title ?? mediaDetails.name"
+          loading="lazy"
+        />
+        <div class="text">
+          <h1 class="title">{{ mediaDetails.title ?? mediaDetails.name }}</h1>
+          <p class="overview">
+            {{ mediaDetails.overview || 'Sinopse não disponível.' }}
+          </p>
+          <div class="infos">
+            <div class="vote-average">
+              <i class="bi bi-star-fill"></i>
+              <span>{{ mediaDetails.vote_average | tmdbPercent }}</span>
+            </div>
+
+            @if (mediaDetails.vote_count !== undefined) {
+              <div class="vote-count">
+                <span>{{ mediaDetails.vote_count }} votes</span>
+              </div>
+            }
+
+            @if (mediaDetails.release_date || mediaDetails.first_air_date) {
+              <div class="release-date">
+                <span>{{
+                  mediaDetails.release_date ?? mediaDetails.first_air_date | date: 'yyyy-MM-dd'
+                }}</span>
+              </div>
+            }
+            @if (mediaDetails.runtime) {
+              <div class="runtime">
+                <span>{{ mediaDetails.runtime }} min</span>
+              </div>
+            } @else if (mediaDetails.episode_run_time?.length) {
+              <div class="runtime">
+                <span>{{ mediaDetails?.episode_run_time?.[0] }} min/ep</span>
+              </div>
+            }
+          </div>
+          @if (mediaDetails.genres.length) {
+            <ul class="genres">
+              @for (g of mediaDetails.genres; track g.id) {
+                <li class="genre-chip">{{ g.name }}</li>
+              }
+            </ul>
+          }
+          <h2 class="section-title">Cast</h2>
+          @if (topCast$ | async; as topCast) {
+            @if (topCast.length) {
+              <ul class="people-grid">
+                @for (c of topCast; track c.id) {
+                  <li class="person">
+                    @if (c.profile_path) {
+                      <img
+                        class="person-photo"
+                        [src]="'https://image.tmdb.org/t/p/w185' + c.profile_path"
+                        [alt]="c.name"
+                        loading="lazy"
+                      />
+                    } @else {
+                      <div class="person-photo fallback" aria-hidden="true"></div>
+                    }
+                    <div class="person-text">
+                      <p class="person-name">{{ c.name }}</p>
+                      <p class="person-role">{{ c.character }}</p>
+                    </div>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p class="empty">Cast not found.</p>
+            }
+          }
+          <h2 class="section-title">Crew</h2>
+          @if (mainCrew$ | async; as mainCrew) {
+            @if (mainCrew.length) {
+              <ul class="crew-list">
+                @for (m of mainCrew; track m.id) {
+                  <li class="crew-item">
+                    <span class="crew-name">{{ m.name }}</span>
+                    <span class="crew-job">{{ m.job }}</span>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p class="empty">Crew not found.</p>
+            }
+          }
+          <h2 class="section-title">Videos</h2>
+          @if (videosTrailerClip$ | async; as videos) {
+            @if (videos.length) {
+              <div class="videos-grid">
+                @for (video of videos; track video.id) {
+                  <a
+                    class="video-thumb"
+                    [href]="'https://www.youtube.com/watch?v=' + video.key"
+                    target="_blank"
+                    rel="noopener"
+                    [title]="video.name"
+                  >
+                    <img
+                      [src]="'https://img.youtube.com/vi/' + video.key + '/hqdefault.jpg'"
+                      [alt]="video.name"
+                      loading="lazy"
+                    />
+                    <span class="video-label">{{ video.type }}</span>
+                  </a>
+                }
+              </div>
+            } @else {
+              <p class="empty">Videos not found.</p>
+            }
+          }
+        </div>
+      </div>
+    } @else {
+      <p class="empty required">
+        Select a <strong>movie or tv show</strong> to see the details.
+      </p>
+    }
+  </div>
+</div>

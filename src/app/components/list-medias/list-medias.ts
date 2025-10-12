@@ -4,17 +4,18 @@ import { exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap
 import { Media } from '../../models/media';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { TMDBService } from '../../services/tmdb-service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { MediaCard } from '../media-card/media-card';
 
 @Component({
   selector: 'clqt-list-medias',
-  imports: [AsyncPipe, GsButtons, MediaCard],
+  imports: [AsyncPipe, GsButtons, MediaCard, RouterLink],
   templateUrl: './list-medias.html',
   styleUrl: './list-medias.scss',
 })
 export class ListMedias implements OnInit {
   @Input() public medias$?: Observable<Media[]>;
+  public mediaTypeStr?: string;
   public buttonType = gsButtonTypeEnum;
   public targetType = gsTabTargetEnum;
   public variant = gsVariant;
@@ -40,13 +41,13 @@ export class ListMedias implements OnInit {
         }
 
         this.pageIndex = 1;
-
+        this.mediaTypeStr = mediaType;
         const page$ = this.clickLoadMore$.pipe(
           startWith(void 1),
           filter(() => !this.finalPageReached),
           exhaustMap(() =>
             this.tMDBService
-              .selectMediasByType(mediaType, this.pageIndex, 18, category)
+              .getMediasByType(mediaType, this.pageIndex, 18, category)
               .pipe(tap(() => (this.pageIndex += 1))),
           ),
         );

@@ -16,6 +16,7 @@ export class Medias {
   private readonly quantity = 12;
   private readonly route = inject(ActivatedRoute);
   private readonly tMDBService = inject(TMDBService);
+  public mediaTypeStr?: string;
 
   public readonly mediaType$ = this.route.paramMap.pipe(
     map((params: ParamMap) => {
@@ -24,7 +25,7 @@ export class Medias {
       if (!mediaType) {
         throw new Error('deu ruim');
       }
-
+      this.mediaTypeStr = mediaType;
       return mediaType as MediaTypes;
     }),
     filter((mediaType) => Object.values(MediaTypes).includes(mediaType)),
@@ -33,32 +34,32 @@ export class Medias {
 
   public readonly popularMedias$ = this.mediaType$.pipe(
     switchMap((mediaType) =>
-      this.tMDBService.selectMediasByType(mediaType, 1, this.quantity, 'popular'),
+      this.tMDBService.getMediasByType(mediaType, 1, this.quantity, 'popular'),
     ),
   );
   public readonly topRatedMedias$ = this.mediaType$.pipe(
     switchMap((mediaType) =>
-      this.tMDBService.selectMediasByType(mediaType, 1, this.quantity, 'top_rated'),
+      this.tMDBService.getMediasByType(mediaType, 1, this.quantity, 'top_rated'),
     ),
   );
   public readonly upcomingMedias$ = this.mediaType$.pipe(
     switchMap((mediaType) =>
-      this.tMDBService.selectMediasByType(mediaType, 1, this.quantity, 'upcoming'),
+      this.tMDBService.getMediasByType(mediaType, 1, this.quantity, 'upcoming'),
     ),
   );
   public readonly nowPlayingMedias$ = this.mediaType$.pipe(
     switchMap((mediaType) =>
-      this.tMDBService.selectMediasByType(mediaType, 1, this.quantity, 'now_playing'),
+      this.tMDBService.getMediasByType(mediaType, 1, this.quantity, 'now_playing'),
     ),
   );
   public readonly airingTodayMedias$ = this.mediaType$.pipe(
     switchMap((mediaType) =>
-      this.tMDBService.selectMediasByType(mediaType, 1, this.quantity, 'airing_today'),
+      this.tMDBService.getMediasByType(mediaType, 1, this.quantity, 'airing_today'),
     ),
   );
   public readonly onTheAirMedias$ = this.mediaType$.pipe(
     switchMap((mediaType) =>
-      this.tMDBService.selectMediasByType(mediaType, 1, this.quantity, 'on_the_air'),
+      this.tMDBService.getMediasByType(mediaType, 1, this.quantity, 'on_the_air'),
     ),
   );
 }

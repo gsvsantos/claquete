@@ -1,21 +1,38 @@
 <div class="main">
-  <gs-buttons
-    class="btn-back"
-    [buttonType]="buttonType.Link"
-    text="Voltar"
-    [link]="['/movie', 'popular']"
-    [target]="targetType.NewTab"
-    [variant]="variant.Outline"
-  ></gs-buttons>
-  <div class="medias-list">
-    @for (media of medias$ | async; track $index) {
-      <clqt-media-card [media]="media"></clqt-media-card>
-    }
+  <div class="content">
+    <gs-buttons
+      class="btn-back"
+      [buttonType]="buttonType.Link"
+      text="Back"
+      bootstrapIcon="bi-chevron-double-left"
+      color="#41C8D5"
+      textColor="#FFFFFF"
+      hoverColor="#12AFC0"
+      activeColor="#29BBCA"
+      link="/main-menu"
+      [target]="targetType.NewTab"
+      [variant]="variant.Outline"
+    ></gs-buttons>
+    <div class="medias-list">
+      @for (media of medias$ | async; track $index) {
+        <a class="media-link" [routerLink]="['/' + mediaTypeStr, 'details', media.id]">
+          <clqt-media-card [media]="media"></clqt-media-card>
+        </a>
+      }
+    </div>
+    <gs-buttons
+      class="btn-loadMore"
+      [buttonType]="buttonType.Default"
+      text="Load More"
+      bootstrapIcon="bi-arrow-clockwise"
+      color="#41C8D5"
+      textColor="#FFFFFF"
+      hoverColor="#12AFC0"
+      activeColor="#29BBCA"
+      [transitionProperties]="['background-color', 'box-shadow']"
+      [transitionDuration]="200"
+      [transitionEase]="'ease-in-out'"
+      (click)="loadMore()"
+    ></gs-buttons>
   </div>
-  <gs-buttons
-    class="btn-loadMore"
-    [buttonType]="buttonType.Default"
-    text="Carregar Mais"
-    (click)="loadMore()"
-  ></gs-buttons>
 </div>
