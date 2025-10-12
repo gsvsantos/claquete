@@ -9,6 +9,7 @@ import {
   TMDBApiMediaListResponse,
 } from '../models/tmdb-api';
 import { CacheService } from './cache.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class TMDBService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly baseUrl: string = 'https://api.themoviedb.org/3';
   private readonly cache: CacheService = inject(CacheService);
+  private readonly local = inject(LocalStorageService);
 
   public getMediasByType(
     mediaType: string,
@@ -39,13 +41,17 @@ export class TMDBService {
         map((apiResponse: TMDBApiMediaListResponse): Media[] =>
           apiResponse.results.map(
             (result: TMDBApiMediaListDetailsResponse): Media =>
-              this.mapMediaDetailsFromList(result),
+              this.mapMediaDetailsFromList(result, mediaType),
           ),
         ),
         tap((fullList: Media[]): void => {
           this.cache.put<Media[]>(fullUrl, fullList);
         }),
         map((fullList: Media[]): Media[] => fullList.slice(0, quantity)),
+        map((fullList: Media[]): Media[] => {
+          const favIds = new Set(this.local.getFavoritesSnapshot().map((media) => media.id));
+          return fullList.map((media) => ({ ...media, favorite: favIds.has(media.id) }));
+        }),
       );
   }
 
@@ -64,16 +70,22 @@ export class TMDBService {
       .pipe(
         map(
           (apiResponse: TMDBApiMediaDetailsResponse): ThisMediaDetails =>
-            this.mapMediaDetailsFromDetails(apiResponse),
+            this.mapMediaDetailsFromDetails(apiResponse, mediaType),
         ),
         tap((details: ThisMediaDetails): void => {
           this.cache.put<ThisMediaDetails>(fullUrl, details);
         }),
+        map((details: ThisMediaDetails): ThisMediaDetails => {
+          const favIds = new Set(this.local.getFavoritesSnapshot().map((media) => media.id));
+          return { ...details, favorite: favIds.has(details.id) };
+        }),
       );
   }
 
-  private mapMediaDetailsFromList(obj: TMDBApiMediaListDetailsResponse): Media {
+  private mapMediaDetailsFromList(obj: TMDBApiMediaListDetailsResponse, mediaType: string): Media {
     return {
+      mediaType: mediaType,
+      favorite: false,
       id: obj.id,
       title: obj.title,
       name: obj.name,
@@ -84,8 +96,13 @@ export class TMDBService {
       overview: obj.overview,
     };
   }
-  private mapMediaDetailsFromDetails(obj: TMDBApiMediaDetailsResponse): ThisMediaDetails {
+  private mapMediaDetailsFromDetails(
+    obj: TMDBApiMediaDetailsResponse,
+    mediaType: string,
+  ): ThisMediaDetails {
     return {
+      mediaType: mediaType,
+      favorite: false,
       id: obj.id,
       title: obj.title,
       name: obj.name,

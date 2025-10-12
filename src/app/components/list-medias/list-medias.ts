@@ -14,7 +14,7 @@ import { MediaCard } from '../media-card/media-card';
   styleUrl: './list-medias.scss',
 })
 export class ListMedias implements OnInit {
-  @Input() public medias$?: Observable<Media[]>;
+  @Input({required: true}) public medias$?: Observable<Media[]>;
   public mediaTypeStr?: string;
   public buttonType = gsButtonTypeEnum;
   public targetType = gsTabTargetEnum;

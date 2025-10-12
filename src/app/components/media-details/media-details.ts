@@ -6,16 +6,22 @@ import { MediaTypes, ThisMediaDetails } from '../../models/media';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { TmdbPercentPipe } from '../../pipes/tmdb-percent.pipe';
 import { TMDBApiCast, TMDBApiCrew, TMDBApiVideo } from '../../models/tmdb-api';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { gsButtonTypeEnum, gsVariant, GsButtons } from 'gs-buttons';
 
 @Component({
   selector: 'clqt-media-details',
-  imports: [TmdbPercentPipe, DatePipe, AsyncPipe],
+  imports: [TmdbPercentPipe, DatePipe, AsyncPipe, GsButtons],
   templateUrl: './media-details.html',
   styleUrl: './media-details.scss',
 })
 export class MediaDetails {
+  public readonly buttonTypes = gsButtonTypeEnum;
+  public readonly variantTypes = gsVariant;
+
   private readonly route = inject(ActivatedRoute);
   private readonly tMDBService = inject(TMDBService);
+  private readonly local = inject(LocalStorageService);
   public readonly mediaType$ = this.route.paramMap.pipe(
     map((params) => params.get('mediaType') as MediaTypes | null),
     filter(
@@ -36,6 +42,13 @@ export class MediaDetails {
     this.mediaId$,
   ]).pipe(
     switchMap(([mediaType, mediaId]) => this.tMDBService.getMediaDetails(mediaType, mediaId)),
+    map((details: ThisMediaDetails) => {
+      const isFav: boolean = this.local
+        .getFavoritesSnapshot()
+        .some((media) => media.id === details.id);
+      details.favorite = isFav;
+      return details;
+    }),
   );
 
   public readonly isMovie$: Observable<boolean> = this.mediaType$.pipe(
@@ -62,7 +75,13 @@ export class MediaDetails {
 
   public readonly videosTrailerClip$: Observable<TMDBApiVideo[]> = this.mediaDetails$!.pipe(
     map((mediaDetail) =>
-      (mediaDetail?.videos?.results ?? []).filter((video) => video.type === 'Trailer' || video.type === 'Clip'),
+      (mediaDetail?.videos?.results ?? []).filter(
+        (video) => video.type === 'Trailer' || video.type === 'Clip',
+      ),
     ),
   );
+
+  public onToggleFavorite(media: ThisMediaDetails): void {
+    this.local.changeMediaStatus(media);
+  }
 }

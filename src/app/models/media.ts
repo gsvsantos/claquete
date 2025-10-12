@@ -6,6 +6,8 @@ export enum MediaTypes {
 }
 
 export interface Media {
+  favorite: boolean;
+  mediaType: string;
   id: number;
   title?: string;
   name?: string;
