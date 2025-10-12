@@ -1,21 +1,16 @@
 @use '../../../variaveis' as *;
 
 .main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 12px 0 12px 0;
-}
-
-.media-link {
-  color: $texto-principal;
-  text-decoration: none;
+  min-height: 100vh;
+  padding: 16px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-width: 1560px;
+  margin: 0 auto;
   background: $gradient-background;
 }
 
@@ -25,9 +20,16 @@
 
 .medias-list {
   display: grid;
-  grid-template-columns: repeat(6, 240px);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 20px;
-  height: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.media-link {
+  color: $texto-principal;
+  text-decoration: none;
 }
 
 @media (max-width: 1800px) {

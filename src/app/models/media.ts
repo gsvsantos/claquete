@@ -55,7 +55,6 @@ export interface MediaCrewMember {
   profile_path: TMDBImagePath;
 }
 
-// TV_Show Summary
 export interface MediaSeasonSummary {
   id: number;
   season_number: number;
