@@ -19,6 +19,7 @@ export class Medias {
   public mediaTypeStr?: string;
 
   public readonly mediaType$ = this.route.paramMap.pipe(
+    distinctUntilChanged(),
     map((params: ParamMap) => {
       const mediaType = params.get('mediaType');
 
@@ -29,7 +30,6 @@ export class Medias {
       return mediaType as MediaTypes;
     }),
     filter((mediaType) => Object.values(MediaTypes).includes(mediaType)),
-    distinctUntilChanged(),
   );
 
   public readonly popularMedias$ = this.mediaType$.pipe(

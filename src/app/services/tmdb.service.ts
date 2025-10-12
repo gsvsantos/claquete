@@ -1,6 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, of, skip, tap } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  from,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  toArray,
+} from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Media, ThisMediaDetails } from '../models/media';
 import {
@@ -27,9 +39,16 @@ export class TMDBService {
   }
 
   public constructor() {
-    this.languageService.currentLanguage$.pipe(skip(1)).subscribe(() => {
-      this.cache.removeByPrefix(this.baseUrl);
-    });
+    this.languageService.currentLanguage$
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(200),
+        switchMap(() => {
+          this.cache.removeByPrefix(this.baseUrl);
+          return this.reloadFavoritesByLanguage$();
+        }),
+      )
+      .subscribe();
   }
 
   public searchMulti(
@@ -94,7 +113,7 @@ export class TMDBService {
       );
   }
 
-  public getMediaDetails(mediaType: string, mediaId: number): Observable<ThisMediaDetails> {
+  public getMediaDetailsByID(mediaType: string, mediaId: number): Observable<ThisMediaDetails> {
     const url: string = `${this.baseUrl}/${mediaType}/${mediaId}`;
     const params = new HttpParams()
       .set('append_to_response', 'videos,credits')
@@ -102,8 +121,11 @@ export class TMDBService {
 
     const cacheKey: string = this.buildCacheKey(url, params);
     const cachedDetails: ThisMediaDetails | undefined = this.cache.get<ThisMediaDetails>(cacheKey);
-    if (cachedDetails !== undefined) return of(cachedDetails);
 
+    if (cachedDetails !== undefined) {
+      const favoriteIds = new Set(this.local.getFavoritesSnapshot().map((media) => media.id));
+      return of({ ...cachedDetails, favorite: favoriteIds.has(cachedDetails.id) });
+    }
     return this.http
       .get<TMDBApiMediaDetailsResponse>(url, {
         headers: { Authorization: environment.apiKey },
@@ -117,6 +139,33 @@ export class TMDBService {
           return { ...details, favorite: favoriteIds.has(details.id) };
         }),
       );
+  }
+
+  private reloadFavoritesByLanguage$(): Observable<void> {
+    const currentFavorites: Media[] = this.local.getFavoritesSnapshot();
+    if (currentFavorites.length === 0) return of(void 0);
+
+    const uniqueMap: Map<string, Media> = new Map(
+      currentFavorites.map((media: Media) => [`${media.mediaType}:${media.id}`, media]),
+    );
+    const favoritesToFetch: Media[] = Array.from(uniqueMap.values());
+
+    const MAX_CONCURRENT_REQUESTS: number = 5;
+
+    return from(favoritesToFetch).pipe(
+      mergeMap(
+        (favoriteMedia: Media) =>
+          this.getMediaDetailsByID(favoriteMedia.mediaType, favoriteMedia.id).pipe(
+            catchError(() => of<Media>({ ...favoriteMedia, favorite: true })),
+          ),
+        MAX_CONCURRENT_REQUESTS,
+      ),
+      toArray(),
+      tap((updatedFavorites: Media[]) => {
+        this.local.setFavorites(updatedFavorites);
+      }),
+      map(() => void 0),
+    );
   }
 
   private mapMediaDetailsFromList(obj: TMDBApiMediaListDetailsResponse, mediaType: string): Media {
@@ -133,6 +182,7 @@ export class TMDBService {
       overview: obj.overview,
     };
   }
+
   private mapMediaDetailsFromDetails(
     obj: TMDBApiMediaDetailsResponse,
     mediaType: string,

@@ -1,19 +1,24 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Media } from '../models/media';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser: boolean = isPlatformBrowser(this.platformId);
+
   private readonly key: string = 'claquete:favorites';
   private readonly favoritesMediaSubject: BehaviorSubject<Media[]> = new BehaviorSubject<Media[]>(
     [],
   );
 
   public constructor() {
-    const jsonString = localStorage.getItem(this.key);
+    if (!this.isBrowser) return;
 
+    const jsonString: string | null = localStorage.getItem(this.key);
     if (!jsonString) return;
 
     try {
@@ -38,7 +43,9 @@ export class LocalStorageService {
     }
 
     this.favoritesMediaSubject.next(nextFavorites);
-    localStorage.setItem(this.key, JSON.stringify(nextFavorites));
+    if (this.isBrowser) {
+      localStorage.setItem(this.key, JSON.stringify(nextFavorites));
+    }
   }
 
   public getFavorites(): Observable<Media[]> {
@@ -51,5 +58,16 @@ export class LocalStorageService {
 
   public getFavoritesSnapshot(): Media[] {
     return this.favoritesMediaSubject.getValue();
+  }
+
+  public setFavorites(updatedFavorites: Media[]): void {
+    const normalizedFavorites: Media[] = updatedFavorites.map(
+      (media: Media): Media => ({ ...media, favorite: true }),
+    );
+
+    this.favoritesMediaSubject.next(normalizedFavorites);
+    if (this.isBrowser) {
+      localStorage.setItem(this.key, JSON.stringify(normalizedFavorites));
+    }
   }
 }

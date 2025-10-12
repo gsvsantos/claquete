@@ -23,25 +23,25 @@ export class MediaDetails {
   private readonly tMDBService = inject(TMDBService);
   private readonly local = inject(LocalStorageService);
   public readonly mediaType$ = this.route.paramMap.pipe(
+    distinctUntilChanged(),
     map((params) => params.get('mediaType') as MediaTypes | null),
     filter(
       (mediaType): mediaType is MediaTypes =>
         !!mediaType && Object.values(MediaTypes).includes(mediaType),
     ),
-    distinctUntilChanged(),
   );
 
   public readonly mediaId$ = this.route.paramMap.pipe(
+    distinctUntilChanged(),
     map((params) => Number(params.get('id'))),
     filter((id): id is number => Number.isFinite(id)),
-    distinctUntilChanged(),
   );
 
   public readonly mediaDetails$?: Observable<ThisMediaDetails> = combineLatest([
     this.mediaType$,
     this.mediaId$,
   ]).pipe(
-    switchMap(([mediaType, mediaId]) => this.tMDBService.getMediaDetails(mediaType, mediaId)),
+    switchMap(([mediaType, mediaId]) => this.tMDBService.getMediaDetailsByID(mediaType, mediaId)),
     map((details: ThisMediaDetails) => {
       const isFav: boolean = this.local
         .getFavoritesSnapshot()
@@ -52,8 +52,8 @@ export class MediaDetails {
   );
 
   public readonly isMovie$: Observable<boolean> = this.mediaType$.pipe(
-    map((mediaType) => mediaType === MediaTypes.Movie),
     distinctUntilChanged(),
+    map((mediaType) => mediaType === MediaTypes.Movie),
   );
 
   public readonly topCast$: Observable<TMDBApiCast[]> = this.mediaDetails$!.pipe(

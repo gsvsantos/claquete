@@ -53,10 +53,10 @@ export class Search {
   public readonly isLoading$: Observable<boolean> = this.isLoadingSubject.asObservable();
 
   public readonly queryText$: Observable<string> = this.searchControl.valueChanges.pipe(
+    distinctUntilChanged(),
+    debounceTime(300),
     map((text: string) => text.trim()),
     startWith(''),
-    debounceTime(300),
-    distinctUntilChanged(),
   );
 
   public readonly isQueryTooShort$: Observable<boolean> = this.queryText$.pipe(
@@ -81,7 +81,6 @@ export class Search {
           map((response: TMDBApiSearchMultiResponse) =>
             response.results.filter(this.isMovieOrTv).map(this.mapResultToView),
           ),
-          catchError(() => of([] as SearchItemView[])),
           finalize(() => this.isLoadingSubject.next(false)),
         );
     }),
