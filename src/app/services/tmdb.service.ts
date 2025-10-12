@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Media, ThisMediaDetails } from '../models/media';
 import {
@@ -8,44 +8,67 @@ import {
   TMDBApiMediaListDetailsResponse,
   TMDBApiMediaListResponse,
 } from '../models/tmdb-api';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TMDBService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
   private readonly baseUrl: string = 'https://api.themoviedb.org/3';
+  private readonly cache: CacheService = inject(CacheService);
 
   public getMediasByType(
     mediaType: string,
-    pageIndex = 1,
-    quantity = 20,
+    pageIndex: number = 1,
+    quantity: number = 20,
     category: string,
   ): Observable<Media[]> {
-    const fullUrl = `${this.baseUrl}/${mediaType}/${category}?language=en-US&page=${pageIndex}`;
+    const fullUrl: string = `${this.baseUrl}/${mediaType}/${category}?language=en-US&page=${pageIndex}`;
 
-    return this.mapList(fullUrl, quantity);
-  }
+    const cachedList: Media[] | undefined = this.cache.get<Media[]>(fullUrl);
+    if (cachedList !== undefined) {
+      return of(cachedList.slice(0, quantity));
+    }
 
-  public getMediaDetails(mediaType: string, mediaId: number): Observable<ThisMediaDetails> {
-    const fullUrl = `${this.baseUrl}/${mediaType}/${mediaId}?append_to_response=videos,credits&language=en-US`;
-
-    return this.http
-      .get<TMDBApiMediaDetailsResponse>(fullUrl, {
-        headers: { Authorization: environment.apiKey },
-      })
-      .pipe(map((obj) => this.mapMediaDetailsFromDetails(obj)));
-  }
-
-  private mapList(fullUrl: string, quantity: number): Observable<Media[]> {
     return this.http
       .get<TMDBApiMediaListResponse>(fullUrl, {
         headers: { Authorization: environment.apiKey },
       })
       .pipe(
-        map((obj) =>
-          obj.results.map((result) => this.mapMediaDetailsFromList(result)).slice(0, quantity),
+        map((apiResponse: TMDBApiMediaListResponse): Media[] =>
+          apiResponse.results.map(
+            (result: TMDBApiMediaListDetailsResponse): Media =>
+              this.mapMediaDetailsFromList(result),
+          ),
         ),
+        tap((fullList: Media[]): void => {
+          this.cache.put<Media[]>(fullUrl, fullList);
+        }),
+        map((fullList: Media[]): Media[] => fullList.slice(0, quantity)),
+      );
+  }
+
+  public getMediaDetails(mediaType: string, mediaId: number): Observable<ThisMediaDetails> {
+    const fullUrl: string = `${this.baseUrl}/${mediaType}/${mediaId}?append_to_response=videos,credits&language=en-US`;
+
+    const cachedDetails: ThisMediaDetails | undefined = this.cache.get<ThisMediaDetails>(fullUrl);
+    if (cachedDetails !== undefined) {
+      return of(cachedDetails);
+    }
+
+    return this.http
+      .get<TMDBApiMediaDetailsResponse>(fullUrl, {
+        headers: { Authorization: environment.apiKey },
+      })
+      .pipe(
+        map(
+          (apiResponse: TMDBApiMediaDetailsResponse): ThisMediaDetails =>
+            this.mapMediaDetailsFromDetails(apiResponse),
+        ),
+        tap((details: ThisMediaDetails): void => {
+          this.cache.put<ThisMediaDetails>(fullUrl, details);
+        }),
       );
   }
 
@@ -61,7 +84,6 @@ export class TMDBService {
       overview: obj.overview,
     };
   }
-
   private mapMediaDetailsFromDetails(obj: TMDBApiMediaDetailsResponse): ThisMediaDetails {
     return {
       id: obj.id,
@@ -82,7 +104,7 @@ export class TMDBService {
       number_of_episodes: obj.number_of_episodes,
       belongs_to_collection: obj.belongs_to_collection,
       vote_count: obj.vote_count,
-      credits: obj.credits, 
+      credits: obj.credits,
       videos: obj.videos,
     };
   }
