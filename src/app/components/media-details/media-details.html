@@ -9,7 +9,22 @@
           loading="lazy"
         />
         <div class="text">
-          <h1 class="title">{{ mediaDetails.title ?? mediaDetails.name }}</h1>
+          <h1 class="title">
+            {{ mediaDetails.title ?? mediaDetails.name }}
+
+            <gs-buttons
+              [buttonType]="buttonTypes.Default"
+              buttonHtmlType="button"
+              [variant]="mediaDetails.favorite ? variantTypes.Solid : variantTypes.Outline"
+              [text]="mediaDetails.favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+              [bootstrapIcon]="mediaDetails.favorite ? 'bi-heart-fill' : 'bi-heart'"
+              buttonId="fav-btn"
+              color="#ff5a79"
+              [textColor]="mediaDetails.favorite ? '#fff' : ''"
+              (activated)="onToggleFavorite(mediaDetails)"
+            >
+            </gs-buttons>
+          </h1>
           <p class="overview">
             {{ mediaDetails.overview || 'Sinopse não disponível.' }}
           </p>
@@ -119,9 +134,7 @@
         </div>
       </div>
     } @else {
-      <p class="empty required">
-        Select a <strong>movie or tv show</strong> to see the details.
-      </p>
+      <p class="empty required">Select a <strong>movie or tv show</strong> to see the details.</p>
     }
   </div>
 </div>
