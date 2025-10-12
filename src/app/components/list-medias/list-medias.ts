@@ -3,7 +3,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap, tap } from 'rxjs';
 import { Media } from '../../models/media';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { TMDBService } from '../../services/tmdb-service';
+import { TMDBService } from '../../services/tmdb.service';
 import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { MediaCard } from '../media-card/media-card';
 

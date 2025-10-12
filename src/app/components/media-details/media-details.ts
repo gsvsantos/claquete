@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { TMDBService } from '../../services/tmdb-service';
+import { TMDBService } from '../../services/tmdb.service';
 import { MediaTypes, ThisMediaDetails } from '../../models/media';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { TmdbPercentPipe } from '../../pipes/tmdb-percent-pipe';
+import { TmdbPercentPipe } from '../../pipes/tmdb-percent.pipe';
 import { TMDBApiCast, TMDBApiCrew, TMDBApiVideo } from '../../models/tmdb-api';
 
 @Component({

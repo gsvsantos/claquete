@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from '../../models/media';
-import { TMDBService } from '../../services/tmdb-service';
+import { TMDBService } from '../../services/tmdb.service';
 import { Carousel } from '../carousel/carousel';
 
 @Component({

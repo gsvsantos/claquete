@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs';
-import { TMDBService } from '../../services/tmdb-service';
+import { TMDBService } from '../../services/tmdb.service';
 import { Carousel } from '../carousel/carousel';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
