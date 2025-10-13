@@ -1,9 +1,13 @@
 @use '../../../variaveis' as *;
 
-.card {
-  display: flex;
-  flex-direction: column;
-  background: $gradient-background;
+.main {
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.content {
+  max-width: 1560px;
+  margin: 0 auto;
 }
 
 .popularMovies,
@@ -13,7 +17,8 @@
   padding: 10px;
 }
 
-.popularMovies h1,
-.topRatedMovies h1 {
+.section-title {
+  margin: 12px 0 8px;
+  font-weight: 800;
   align-self: center;
 }

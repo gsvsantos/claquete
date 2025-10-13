@@ -13,10 +13,11 @@
             {{ mediaDetails.title ?? mediaDetails.name }}
 
             <gs-buttons
+              class="fav-btn"
               [buttonType]="buttonTypes.Default"
               buttonHtmlType="button"
               [variant]="mediaDetails.favorite ? variantTypes.Solid : variantTypes.Outline"
-              [text]="mediaDetails.favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+              text=""
               [bootstrapIcon]="mediaDetails.favorite ? 'bi-heart-fill' : 'bi-heart'"
               buttonId="fav-btn"
               color="#ff5a79"

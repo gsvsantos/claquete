@@ -41,25 +41,20 @@
 }
 
 .title {
+  display: flex;
   font-size: clamp(1.4rem, 2.2vw, 2.15rem);
   font-weight: 800;
   margin: 0;
 }
 
 .fav-btn {
-  margin-left: 8px;
-  border: 0;
   background: transparent;
   cursor: pointer;
   font-size: 1.1rem;
   line-height: 1;
-  color: #ff6b6b;
-
+  margin-left: auto;
   &:hover {
     transform: translateY(-1px);
-  }
-  &[aria-pressed='true'] {
-    color: #ff5a79;
   }
 }
 
@@ -282,5 +277,15 @@
     .video-thumb {
       scroll-snap-align: start;
     }
+  }
+}
+
+@media (max-width: 482px) {
+  .title {
+    display: flex;
+    flex-direction: column;
+  }
+  .fav-btn {
+    margin-left: 0;
   }
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { LanguageSelector } from "../language-selector/language-selector";
 
 @Component({
   selector: 'clqt-footer',
-  imports: [],
+  imports: [LanguageSelector],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
 })

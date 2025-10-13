@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { Media } from '../../models/media';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { MediaCard } from '../media-card/media-card';
 import { AsyncPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Carousel } from '../carousel/carousel';
 
 @Component({
   selector: 'app-favorites',
-  imports: [AsyncPipe, MediaCard, RouterLink],
+  imports: [AsyncPipe, Carousel],
   templateUrl: './favorites.html',
   styleUrl: './favorites.scss',
 })
@@ -30,5 +29,10 @@ export class Favorites {
 
         return { movies, tvShows };
       }),
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
+
+  public readonly movies$: Observable<Media[]> = this.favoritesByType$.pipe(map((x) => x.movies));
+
+  public readonly tvShows$: Observable<Media[]> = this.favoritesByType$.pipe(map((x) => x.tvShows));
 }

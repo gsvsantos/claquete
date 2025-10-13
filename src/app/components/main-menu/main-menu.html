@@ -1,10 +1,12 @@
-<div class="card">
-  <div class="popularMovies">
-    <h1>Popular Movies</h1>
-    <clqt-carousel [medias$]="popularMovies$" mediaType="movie"></clqt-carousel>
-  </div>
-  <div class="topRatedMovies">
-    <h1>Popular TV Shows</h1>
-    <clqt-carousel [medias$]="popularTVShows$" mediaType="tv"></clqt-carousel>
+<div class="main">
+  <div class="content">
+    <div class="popularMovies">
+      <h2 class="section-title">Popular Movies</h2>
+      <clqt-carousel [medias$]="popularMovies$" mediaType="movie"></clqt-carousel>
+    </div>
+    <div class="topRatedMovies">
+      <h2 class="section-title">Popular TV Shows</h2>
+      <clqt-carousel [medias$]="popularTVShows$" mediaType="tv"></clqt-carousel>
+    </div>
   </div>
 </div>

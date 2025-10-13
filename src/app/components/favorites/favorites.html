@@ -1,35 +1,21 @@
 <div class="main">
   <div class="content">
-    <div class="medias-list">
-      @if (favoritesByType$ | async; as fav) {
-        @if (!fav.movies.length && !fav.tvShows.length) {
-          <p class="empty">You need to favorite some media first.</p>
-        }
-        @if (fav.movies.length) {
-          <h2 class="section-title">Movies</h2>
-          <ul class="grid">
-            @for (media of fav.movies; track media.id) {
-              <li>
-                <a class="media-link" [routerLink]="['/' + media.mediaType, 'details', media.id]">
-                  <clqt-media-card [media]="media"></clqt-media-card>
-                </a>
-              </li>
-            }
-          </ul>
-        }
-        @if (fav.tvShows.length) {
-          <h2 class="section-title">TV Shows</h2>
-          <ul class="grid">
-            @for (media of fav.tvShows; track media.id) {
-              <li>
-                <a class="media-link" [routerLink]="['/' + media.mediaType, 'details', media.id]">
-                  <clqt-media-card [media]="media"></clqt-media-card>
-                </a>
-              </li>
-            }
-          </ul>
-        }
+    @if (favoritesByType$ | async; as fav) {
+      @if (!fav.movies.length && !fav.tvShows.length) {
+        <p class="empty">You need to favorite some media first.</p>
       }
-    </div>
+      @if (fav.movies.length) {
+        <div class="movies">
+          <h2 class="section-title">Movies</h2>
+          <clqt-carousel [medias$]="movies$" mediaType="movie"></clqt-carousel>
+        </div>
+      }
+      @if (fav.tvShows.length) {
+        <div class="tv-shows">
+          <h2 class="section-title">TV Shows</h2>
+          <clqt-carousel [medias$]="tvShows$" mediaType="tv"></clqt-carousel>
+        </div>
+      }
+    }
   </div>
 </div>
