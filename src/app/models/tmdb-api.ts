@@ -1,4 +1,10 @@
 // Bases
+export interface TMDBAuthenticationResponse {
+  status_code: number;
+  status_message: string;
+  success: boolean;
+}
+
 export type TMDBImagePath = string | null;
 
 export interface TMDBApiGenre {

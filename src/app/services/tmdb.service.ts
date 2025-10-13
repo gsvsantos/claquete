@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   catchError,
   debounceTime,
@@ -20,10 +21,12 @@ import {
   TMDBApiMediaListDetailsResponse,
   TMDBApiMediaListResponse,
   TMDBApiSearchMultiResponse,
+  TMDBAuthenticationResponse,
 } from '../models/tmdb-api';
 import { CacheService } from './cache.service';
 import { LocalStorageService } from './local-storage.service';
 import { LanguageService } from './language.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +35,10 @@ export class TMDBService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly baseUrl: string = 'https://api.themoviedb.org/3';
   private readonly cache: CacheService = inject(CacheService);
+  private readonly router = inject(Router);
   private readonly local = inject(LocalStorageService);
   private readonly languageService: LanguageService = inject(LanguageService);
+  private readonly toastService = inject(ToastrService);
   private buildCacheKey(url: string, params?: HttpParams): string {
     return params ? `${url}?${params.toString()}` : url;
   }
@@ -49,6 +54,18 @@ export class TMDBService {
         }),
       )
       .subscribe();
+  }
+
+  public tokenAuthVerify$(): Observable<boolean> {
+    const url: string = `${this.baseUrl}/authentication`;
+    return this.http
+      .get<TMDBAuthenticationResponse>(url, {
+        headers: { Authorization: environment.apiKey },
+      })
+      .pipe(
+        map((apiResponse: TMDBAuthenticationResponse) => apiResponse.success === true),
+        catchError(() => of(false)),
+      );
   }
 
   public searchMulti(

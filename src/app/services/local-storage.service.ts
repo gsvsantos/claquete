@@ -2,11 +2,13 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Media } from '../models/media';
 import { isPlatformBrowser } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
+  private readonly toastService = inject(ToastrService)
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser: boolean = isPlatformBrowser(this.platformId);
 
@@ -35,10 +37,12 @@ export class LocalStorageService {
 
     if (media.favorite) {
       media.favorite = false;
+      this.toastService.success('Removed from favorites');
       const index: number = nextFavorites.findIndex((_media) => _media.id === media.id);
       if (index > -1) nextFavorites.splice(index, 1);
     } else {
       media.favorite = true;
+      this.toastService.success('Added to favorites');
       nextFavorites.push(media);
     }
 

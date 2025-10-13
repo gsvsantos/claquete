@@ -1,0 +1,19 @@
+<div class="main">
+  <div class="content">
+    <gs-buttons
+      [buttonType]="buttonType.Default"
+      text="Try Again"
+      bootstrapIcon="bi-arrow-clockwise"
+      color="#41C8D5"
+      textColor="#FFFFFF"
+      hoverColor="#12AFC0"
+      activeColor="#29BBCA"
+      [variant]="variant.Outline"
+      (click)="tryAgain()"
+    ></gs-buttons>
+    <h1>Opsie!</h1>
+    <h2>Invalid TMDB_API Token</h2>
+    <p>You must be granted a valid TMDB_API Read Access Token..</p>
+    <p>Check the env "example.environments".</p>
+  </div>
+</div>

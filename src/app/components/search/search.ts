@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
 import {
-  catchError,
   debounceTime,
   distinctUntilChanged,
   finalize,
@@ -43,7 +42,7 @@ export class Search {
   private readonly tMDBService = inject(TMDBService);
   private readonly languageService = inject(LanguageService);
 
-  public readonly minimumLength: number = 2;
+  public readonly minimumLength: number = 3;
   public readonly imageBaseUrl: string = 'https://image.tmdb.org/t/p/w92';
   public readonly searchControl: FormControl<string> = new FormControl<string>('', {
     nonNullable: true,
