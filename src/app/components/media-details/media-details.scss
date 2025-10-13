@@ -6,8 +6,12 @@
 }
 
 .content {
-  max-width: 1360px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1560px;
   margin: 0 auto;
+  background: $gradient-background;
 }
 
 .card {

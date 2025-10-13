@@ -30,7 +30,6 @@ import {
 import { CacheService } from './cache.service';
 import { LocalStorageService } from './local-storage.service';
 import { LanguageService } from './language.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +40,6 @@ export class TMDBService {
   private readonly cache: CacheService = inject(CacheService);
   private readonly local = inject(LocalStorageService);
   private readonly languageService: LanguageService = inject(LanguageService);
-  private readonly toastService = inject(ToastrService);
   private buildCacheKey(url: string, params?: HttpParams): string {
     return params ? `${url}?${params.toString()}` : url;
   }
@@ -102,38 +100,6 @@ export class TMDBService {
 
   public mapMultiSearchToResult(results: TMDBApiSearchResult[]): SearchItemView[] {
     return results.filter(this.isMovieOrTv).map(this.mapResultToView);
-  }
-
-  private readonly isMovieOrTv = (
-    result: TMDBApiSearchResult,
-  ): result is TMDBApiSearchMovieResult | TMDBApiSearchTvResult =>
-    result.media_type === 'movie' || result.media_type === 'tv';
-
-  private readonly mapResultToView = (
-    result: TMDBApiSearchMovieResult | TMDBApiSearchTvResult,
-  ): SearchItemView => {
-    if (result.media_type === 'movie') {
-      return {
-        id: result.id,
-        mediaType: 'movie',
-        title: result.title,
-        subtitle: result.release_date ?? null,
-        posterUrl: this.buildPosterUrl(result.poster_path),
-        routerLink: ['/', 'movie', 'details', String(result.id)],
-      };
-    }
-    return {
-      id: result.id,
-      mediaType: 'tv',
-      title: result.name,
-      subtitle: result.first_air_date ?? null,
-      posterUrl: this.buildPosterUrl(result.poster_path),
-      routerLink: ['/', 'tv', 'details', String(result.id)],
-    };
-  };
-
-  private buildPosterUrl(path: TMDBImagePath): string | null {
-    return path ? `https://image.tmdb.org/t/p/w92/${path}` : null;
   }
 
   public getMediasByType(
@@ -224,9 +190,50 @@ export class TMDBService {
     );
   }
 
+  private readonly isMovieOrTv = (
+    result: TMDBApiSearchResult,
+  ): result is TMDBApiSearchMovieResult | TMDBApiSearchTvResult =>
+    result.media_type === 'movie' || result.media_type === 'tv';
+
+  private readonly mapResultToView = (
+    result: TMDBApiSearchMovieResult | TMDBApiSearchTvResult,
+  ): SearchItemView => {
+    if (result.media_type === 'movie') {
+      return {
+        id: result.id,
+        mediaType: 'movie',
+        title: result.title,
+        subtitle: result.release_date ?? null,
+        posterUrl: this.buildPosterUrl(result.poster_path),
+        routerLink: ['/', 'movie', 'details', String(result.id)],
+      };
+    }
+    return {
+      id: result.id,
+      mediaType: 'tv',
+      title: result.name,
+      subtitle: result.first_air_date ?? null,
+      posterUrl: this.buildPosterUrl(result.poster_path),
+      routerLink: ['/', 'tv', 'details', String(result.id)],
+    };
+  };
+
+  private buildPosterUrl(path: TMDBImagePath): string | null {
+    return path ? `https://image.tmdb.org/t/p/w92/${path}` : null;
+  }
+
   private mapMediaDetailsFromList(obj: TMDBApiMediaListDetailsResponse, mediaType: string): Media {
+    let routerLink = [''];
+
+    if (mediaType === 'movie') {
+      routerLink = ['/', 'movie', 'details', String(obj.id)];
+    } else {
+      routerLink = ['/', 'tv', 'details', String(obj.id)];
+    }
+
     return {
       mediaType: mediaType,
+      routerLink: routerLink,
       favorite: false,
       id: obj.id,
       title: obj.title,
@@ -243,8 +250,17 @@ export class TMDBService {
     obj: TMDBApiMediaDetailsResponse,
     mediaType: string,
   ): ThisMediaDetails {
+    let routerLink = [''];
+
+    if (mediaType === 'movie') {
+      routerLink = ['/', 'movie', 'details', String(obj.id)];
+    } else {
+      routerLink = ['/', 'tv', 'details', String(obj.id)];
+    }
+
     return {
       mediaType: mediaType,
+      routerLink: routerLink,
       favorite: false,
       id: obj.id,
       title: obj.title,

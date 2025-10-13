@@ -1,5 +1,18 @@
 <div class="main">
   <div class="content">
+    <gs-buttons
+      class="btn-back"
+      [buttonType]="buttonType.Link"
+      text="Back"
+      bootstrapIcon="bi-chevron-double-left"
+      color="#41C8D5"
+      textColor="#FFFFFF"
+      hoverColor="#12AFC0"
+      activeColor="#29BBCA"
+      link="/main-menu"
+      [target]="targetType.NewTab"
+      [variant]="variantType.Outline"
+    ></gs-buttons>
     @if (mediaDetails$ | async; as mediaDetails) {
       <div class="card">
         <img
@@ -14,9 +27,9 @@
 
             <gs-buttons
               class="fav-btn"
-              [buttonType]="buttonTypes.Default"
+              [buttonType]="buttonType.Default"
               buttonHtmlType="button"
-              [variant]="mediaDetails.favorite ? variantTypes.Solid : variantTypes.Outline"
+              [variant]="mediaDetails.favorite ? variantType.Solid : variantType.Outline"
               text=""
               [bootstrapIcon]="mediaDetails.favorite ? 'bi-heart-fill' : 'bi-heart'"
               buttonId="fav-btn"

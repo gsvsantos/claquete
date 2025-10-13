@@ -27,14 +27,6 @@
   margin: 0 0 16px;
 }
 
-.media-link {
-  display: inline-block;
-  color: $texto-principal;
-  text-decoration: none;
-  width: 246px;
-  height: 476px;
-}
-
 @media (max-width: 1800px) {
   .medias-list {
     grid-template-columns: repeat(5, 1fr);

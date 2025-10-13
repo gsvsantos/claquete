@@ -11,7 +11,7 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 export class NotFound {
   public buttonType = gsButtonTypeEnum;
   public targetType = gsTabTargetEnum;
-  public variant = gsVariant;
+  public variantType = gsVariant;
 
   private readonly router: Router = inject(Router);
 

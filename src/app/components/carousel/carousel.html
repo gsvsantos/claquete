@@ -1,9 +1,7 @@
 <div class="main">
   <div class="medias-carousel" #carousel>
     @for (media of medias$ | async; track $index) {
-      <a class="media-link" [routerLink]="['/' + mediaType, 'details', media.id]">
-        <clqt-media-card [media]="media"></clqt-media-card>
-      </a>
+      <clqt-media-card [media]="media"></clqt-media-card>
     }
   </div>
 

@@ -11,13 +11,11 @@
       activeColor="#29BBCA"
       link="/main-menu"
       [target]="targetType.NewTab"
-      [variant]="variant.Outline"
+      [variant]="variantType.Outline"
     ></gs-buttons>
     <div class="medias-list">
       @for (media of medias$ | async; track $index) {
-        <a class="media-link" [routerLink]="['/' + mediaTypeStr, 'details', media.id]">
-          <clqt-media-card [media]="media"></clqt-media-card>
-        </a>
+        <clqt-media-card [media]="media"></clqt-media-card>
       }
     </div>
     <gs-buttons

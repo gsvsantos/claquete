@@ -6,8 +6,9 @@ export enum MediaTypes {
 }
 
 export interface Media {
-  favorite: boolean;
   mediaType: string;
+  routerLink: string[];
+  favorite: boolean;
   id: number;
   title?: string;
   name?: string;

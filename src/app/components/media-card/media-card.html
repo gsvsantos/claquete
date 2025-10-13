@@ -1,11 +1,13 @@
 @if (media) {
   <div class="card">
-    <img
-      class="poster"
-      [src]="'https://image.tmdb.org/t/p/w500/' + media.poster_path"
-      [alt]="media.title ?? media.name"
-      loading="lazy"
-    />
+    <a class="media-link" [routerLink]="media.routerLink">
+      <img
+        class="poster"
+        [src]="'https://image.tmdb.org/t/p/w500/' + media.poster_path"
+        [alt]="media.title ?? media.name"
+        loading="lazy"
+      />
+    </a>
     <div class="text">
       <h1 class="title">{{ media.title ?? media.name }}</h1>
       <div class="infos">

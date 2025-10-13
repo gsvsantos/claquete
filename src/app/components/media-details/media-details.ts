@@ -7,7 +7,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { TmdbPercentPipe } from '../../pipes/tmdb-percent.pipe';
 import { TMDBApiCast, TMDBApiCrew, TMDBApiVideo } from '../../models/tmdb-api';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { gsButtonTypeEnum, gsVariant, GsButtons } from 'gs-buttons';
+import { gsButtonTypeEnum, gsVariant, GsButtons, gsTabTargetEnum } from 'gs-buttons';
 
 @Component({
   selector: 'clqt-media-details',
@@ -16,8 +16,9 @@ import { gsButtonTypeEnum, gsVariant, GsButtons } from 'gs-buttons';
   styleUrl: './media-details.scss',
 })
 export class MediaDetails {
-  public readonly buttonTypes = gsButtonTypeEnum;
-  public readonly variantTypes = gsVariant;
+  public buttonType = gsButtonTypeEnum;
+  public targetType = gsTabTargetEnum;
+  public variantType = gsVariant;
 
   private readonly route = inject(ActivatedRoute);
   private readonly tMDBService = inject(TMDBService);
