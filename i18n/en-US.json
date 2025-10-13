@@ -1,0 +1,116 @@
+{
+  "navbar": {
+    "title-movies": "Movies",
+    "title-tv-shows": "TV Shows",
+    "navlink-generic": {
+      "all": "All Categories",
+      "popular": "Popular",
+      "top-rated": "Top Rated"
+    },
+    "navlink-movies": {
+      "now-playing": "Now Playing Movies",
+      "upcoming": "Upcoming Movies"
+    },
+    "navlink-tv-shows": {
+      "airing-today": "Airing Today",
+      "on-tv": "On TV"
+    },
+    "navlink-favorites": {
+      "favorites": "Your Favorites"
+    }
+  },
+
+  "common": {
+    "buttons": {
+      "back": "Back",
+      "back-to-main-menu": "Back to Main Menu",
+      "try-again": "Try Again",
+      "load-more": "Load More"
+    },
+    "labels": {
+      "movie": "Movie",
+      "tv-show": "TV Show",
+      "votes": "votes",
+      "min": "min",
+      "min-per-ep": "min/ep"
+    },
+    "messages": {
+      "loading": "Loading…",
+      "nothing-found": "Nothing found.",
+      "type-at-least": "Type at least {{ minimumLength }} chars.",
+      "select-media-to-see-details": "Select a <strong>movie or tv show</strong> to see the details."
+    }
+  },
+
+  "footer": {
+    "data-provided-by": "Data provided by"
+  },
+
+  "medias": {
+    "section-title": {
+      "popular": "Popular",
+      "top-rated": "Top Rated",
+      "upcoming": "Upcoming",
+      "now-playing": "Now Playing",
+      "airing": "Airing",
+      "on-air": "On Air"
+    }
+  },
+
+  "media-details": {
+    "fallback": {
+      "overview-not-available": "Overview not available."
+    },
+    "section-title": {
+      "cast": "Cast",
+      "crew": "Crew",
+      "videos": "Videos"
+    },
+    "empty": {
+      "cast-not-found": "Cast not found.",
+      "crew-not-found": "Crew not found.",
+      "videos-not-found": "Videos not found."
+    },
+    "format": {
+      "vote-count": "{{ count }} votes",
+      "runtime-minutes": "{{ minutes }} min",
+      "runtime-minutes-per-episode": "{{ minutes }} min/ep",
+      "release-date": "yyyy-MM-dd"
+    }
+  },
+
+  "favorites": {
+    "empty": "You need to favorite some media first.",
+    "section-title": {
+      "movies": "Movies",
+      "tv-shows": "TV Shows"
+    }
+  },
+
+  "main-menu": {
+    "section-title": {
+      "popular-movies": "Popular Movies",
+      "popular-tv-shows": "Popular TV Shows"
+    }
+  },
+
+  "not-found": {
+    "title": "Opsie!",
+    "subtitle": "404 Not Found"
+  },
+
+  "not-authorized": {
+    "title": "Opsie!",
+    "subtitle": "Invalid TMDB_API Token",
+    "message-must-be-granted": "You must be granted a valid TMDB_API Read Access Token..",
+    "message-check-env": "Check the env \"example.environments\"."
+  },
+
+  "search": {
+    "placeholder": "Search movies and tv shows",
+    "badge": {
+      "movie": "Movie",
+      "tv-show": "TV Show"
+    }
+  }
+}

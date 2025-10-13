@@ -1,0 +1,116 @@
+{
+  "navbar": {
+    "title-movies": "Películas",
+    "title-tv-shows": "Series",
+    "navlink-generic": {
+      "all": "Todas las categorías",
+      "popular": "Populares",
+      "top-rated": "Más valoradas"
+    },
+    "navlink-movies": {
+      "now-playing": "En cartelera",
+      "upcoming": "Próximos estrenos"
+    },
+    "navlink-tv-shows": {
+      "airing-today": "En emisión hoy",
+      "on-tv": "En TV"
+    },
+    "navlink-favorites": {
+      "favorites": "Tus favoritos"
+    }
+  },
+
+  "common": {
+    "buttons": {
+      "back": "Volver",
+      "back-to-main-menu": "Volver al menú principal",
+      "try-again": "Intentar de nuevo",
+      "load-more": "Cargar más"
+    },
+    "labels": {
+      "movie": "Película",
+      "tv-show": "Serie",
+      "votes": "votos",
+      "min": "min",
+      "min-per-ep": "min/ep"
+    },
+    "messages": {
+      "loading": "Cargando…",
+      "nothing-found": "No se encontró nada.",
+      "type-at-least": "Escribe al menos {{ minimumLength }} caracteres.",
+      "select-media-to-see-details": "Selecciona una <strong>película o serie</strong> para ver los detalles."
+    }
+  },
+
+  "footer": {
+    "data-provided-by": "Datos proporcionados por"
+  },
+
+  "medias": {
+    "section-title": {
+      "popular": "Populares",
+      "top-rated": "Más valoradas",
+      "upcoming": "Próximamente",
+      "now-playing": "En cartelera",
+      "airing": "En emisión",
+      "on-air": "En antena"
+    }
+  },
+
+  "media-details": {
+    "fallback": {
+      "overview-not-available": "Sinopsis no disponible."
+    },
+    "section-title": {
+      "cast": "Reparto",
+      "crew": "Equipo",
+      "videos": "Vídeos"
+    },
+    "empty": {
+      "cast-not-found": "Reparto no encontrado.",
+      "crew-not-found": "Equipo no encontrado.",
+      "videos-not-found": "Vídeos no encontrados."
+    },
+    "format": {
+      "vote-count": "{{ count }} votos",
+      "runtime-minutes": "{{ minutes }} min",
+      "runtime-minutes-per-episode": "{{ minutes }} min/ep",
+      "release-date": "dd/MM/yyyy"
+    }
+  },
+
+  "favorites": {
+    "empty": "Debes marcar algún contenido como favorito primero.",
+    "section-title": {
+      "movies": "Películas",
+      "tv-shows": "Series"
+    }
+  },
+
+  "main-menu": {
+    "section-title": {
+      "popular-movies": "Películas populares",
+      "popular-tv-shows": "Series populares"
+    }
+  },
+
+  "not-found": {
+    "title": "¡Ups!",
+    "subtitle": "404 No encontrado"
+  },
+
+  "not-authorized": {
+    "title": "¡Ups!",
+    "subtitle": "Token de TMDB_API no válido",
+    "message-must-be-granted": "Debes tener un TMDB_API Read Access Token válido.",
+    "message-check-env": "Revisa el env \"example.environments\"."
+  },
+
+  "search": {
+    "placeholder": "Buscar películas y series",
+    "badge": {
+      "movie": "Película",
+      "tv-show": "Serie"
+    }
+  }
+}
