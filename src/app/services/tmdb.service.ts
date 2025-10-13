@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   catchError,
   debounceTime,
@@ -17,11 +16,16 @@ import {
 import { environment } from '../../environments/environment';
 import { Media, ThisMediaDetails } from '../models/media';
 import {
+  SearchItemView,
   TMDBApiMediaDetailsResponse,
   TMDBApiMediaListDetailsResponse,
   TMDBApiMediaListResponse,
+  TMDBApiSearchMovieResult,
   TMDBApiSearchMultiResponse,
+  TMDBApiSearchResult,
+  TMDBApiSearchTvResult,
   TMDBAuthenticationResponse,
+  TMDBImagePath,
 } from '../models/tmdb-api';
 import { CacheService } from './cache.service';
 import { LocalStorageService } from './local-storage.service';
@@ -35,7 +39,6 @@ export class TMDBService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly baseUrl: string = 'https://api.themoviedb.org/3';
   private readonly cache: CacheService = inject(CacheService);
-  private readonly router = inject(Router);
   private readonly local = inject(LocalStorageService);
   private readonly languageService: LanguageService = inject(LanguageService);
   private readonly toastService = inject(ToastrService);
@@ -95,6 +98,42 @@ export class TMDBService {
         params,
       })
       .pipe(tap((res) => this.cache.put(cacheKey, res)));
+  }
+
+  public mapMultiSearchToResult(results: TMDBApiSearchResult[]): SearchItemView[] {
+    return results.filter(this.isMovieOrTv).map(this.mapResultToView);
+  }
+
+  private readonly isMovieOrTv = (
+    result: TMDBApiSearchResult,
+  ): result is TMDBApiSearchMovieResult | TMDBApiSearchTvResult =>
+    result.media_type === 'movie' || result.media_type === 'tv';
+
+  private readonly mapResultToView = (
+    result: TMDBApiSearchMovieResult | TMDBApiSearchTvResult,
+  ): SearchItemView => {
+    if (result.media_type === 'movie') {
+      return {
+        id: result.id,
+        mediaType: 'movie',
+        title: result.title,
+        subtitle: result.release_date ?? null,
+        posterUrl: this.buildPosterUrl(result.poster_path),
+        routerLink: ['/', 'movie', 'details', String(result.id)],
+      };
+    }
+    return {
+      id: result.id,
+      mediaType: 'tv',
+      title: result.name,
+      subtitle: result.first_air_date ?? null,
+      posterUrl: this.buildPosterUrl(result.poster_path),
+      routerLink: ['/', 'tv', 'details', String(result.id)],
+    };
+  };
+
+  private buildPosterUrl(path: TMDBImagePath): string | null {
+    return path ? `https://image.tmdb.org/t/p/w92/${path}` : null;
   }
 
   public getMediasByType(

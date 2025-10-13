@@ -8,28 +8,14 @@ import {
   distinctUntilChanged,
   finalize,
   map,
+  shareReplay,
   startWith,
   switchMap,
 } from 'rxjs/operators';
 
 import { TMDBService } from '../../services/tmdb.service';
 import { LanguageService, TmdbLanguageCode } from '../../services/language.service';
-import {
-  TMDBApiSearchMultiResponse,
-  TMDBApiSearchResult,
-  TMDBApiSearchMovieResult,
-  TMDBApiSearchTvResult,
-  TMDBImagePath,
-} from '../../models/tmdb-api';
-
-interface SearchItemView {
-  id: number;
-  mediaType: 'movie' | 'tv';
-  title: string;
-  subtitle: string | null;
-  posterUrl: string | null;
-  routerLink: string[];
-}
+import { SearchItemView, TMDBApiSearchMultiResponse } from '../../models/tmdb-api';
 
 @Component({
   selector: 'clqt-search',
@@ -41,9 +27,10 @@ interface SearchItemView {
 export class Search {
   private readonly tMDBService = inject(TMDBService);
   private readonly languageService = inject(LanguageService);
+  private readonly languageCode$: Observable<TmdbLanguageCode> =
+    this.languageService.currentLanguage$.pipe(distinctUntilChanged());
 
   public readonly minimumLength: number = 3;
-  public readonly imageBaseUrl: string = 'https://image.tmdb.org/t/p/w92';
   public readonly searchControl: FormControl<string> = new FormControl<string>('', {
     nonNullable: true,
   });
@@ -64,7 +51,7 @@ export class Search {
 
   public readonly viewItems$: Observable<SearchItemView[]> = combineLatest([
     this.queryText$,
-    this.languageService.currentLanguage$,
+    this.languageCode$,
   ]).pipe(
     switchMap(([text, languageCode]: [string, TmdbLanguageCode]) => {
       const canSearch: boolean = text.length >= this.minimumLength;
@@ -78,11 +65,12 @@ export class Search {
         .searchMulti(text, { language: languageCode, includeAdult: false })
         .pipe(
           map((response: TMDBApiSearchMultiResponse) =>
-            response.results.filter(this.isMovieOrTv).map(this.mapResultToView),
+            this.tMDBService.mapMultiSearchToResult(response.results),
           ),
           finalize(() => this.isLoadingSubject.next(false)),
         );
     }),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   public readonly hasResults$: Observable<boolean> = this.viewItems$.pipe(
@@ -99,36 +87,4 @@ export class Search {
         items.length === 0 && !tooShort && text.length >= this.minimumLength,
     ),
   );
-
-  private readonly isMovieOrTv = (
-    result: TMDBApiSearchResult,
-  ): result is TMDBApiSearchMovieResult | TMDBApiSearchTvResult =>
-    result.media_type === 'movie' || result.media_type === 'tv';
-
-  private readonly mapResultToView = (
-    result: TMDBApiSearchMovieResult | TMDBApiSearchTvResult,
-  ): SearchItemView => {
-    if (result.media_type === 'movie') {
-      return {
-        id: result.id,
-        mediaType: 'movie',
-        title: result.title,
-        subtitle: result.release_date ?? null,
-        posterUrl: this.buildPosterUrl(result.poster_path),
-        routerLink: ['/', 'movie', 'details', String(result.id)],
-      };
-    }
-    return {
-      id: result.id,
-      mediaType: 'tv',
-      title: result.name,
-      subtitle: result.first_air_date ?? null,
-      posterUrl: this.buildPosterUrl(result.poster_path),
-      routerLink: ['/', 'tv', 'details', String(result.id)],
-    };
-  };
-
-  private buildPosterUrl(path: TMDBImagePath): string | null {
-    return path ? `${this.imageBaseUrl}${path}` : null;
-  }
 }

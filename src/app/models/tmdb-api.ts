@@ -218,6 +218,15 @@ export interface TMDBApiMediaDetailsResponse {
 
 export type TMDBApiMediaSearchType = 'movie' | 'tv' | 'person';
 
+export interface SearchItemView {
+  id: number;
+  mediaType: 'movie' | 'tv';
+  title: string;
+  subtitle: string | null;
+  posterUrl: string | null;
+  routerLink: string[];
+}
+
 export interface TMDBApiSearchMovieResult {
   media_type: 'movie';
   id: number;
