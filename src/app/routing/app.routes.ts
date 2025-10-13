@@ -11,7 +11,7 @@ import { tokenIsValidGuard } from '../guards/token-is-valid.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'main-menu', pathMatch: 'full' },
-  { path: 'main-menu', component: MainMenu, title: 'Main Menu', canActivate: [tokenIsValidGuard] },
+  { path: 'main-menu', component: MainMenu, title: 'Claquete', canActivate: [tokenIsValidGuard] },
   {
     path: ':mediaType/all',
     component: Medias,

@@ -1,59 +1,131 @@
-# Claquete
+# 🎬 Claquete (CLQT) — Catálogo TMDB em Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+O **Claquete (CLQT)** é um SPA em **Angular 20** para explorar o catálogo do **The Movie Database (TMDB)**: filmes e séries por categoria, busca reativa, detalhes ricos (elenco, trailers) e **favoritos** persistidos no navegador — com seleção de idioma e UI fluida (carrosséis com auto‑scroll no hover).
 
-## Development server
+---
 
-To start a local development server, run:
+## 🧩 Funcionalidades
 
-```bash
-ng serve
+- **Explorar por tipo** (Filmes/Séries) e **categorias** (Popular, Top Rated, Now Playing/Upcoming, Airing/On TV).
+- **Busca reativa** com debounce e resultados tipados (filtra movie/tv).
+- **Detalhes da mídia** com `videos` (trailers/clips) e `credits` (elenco/equipe).
+- **Favoritos** com persistência em **LocalStorage**.
+- **Seleção de idioma** (`en-US`, `pt-BR`, …) com persistência.
+- **Proteção de rotas** via **verificação da API Key** da TMDB.
+- **Toasts** de feedback (ngx-toastr).
+- **Carrosséis** com navegação por **hover** (`clqt-hover-scroll`).
+
+---
+
+## 🧭 Rotas
+
+| Caminho | Título | Proteção |
+|---|---|---|
+| `/main-menu` | Main Menu | ✅ Guard |
+| `/:mediaType/all` | “Movies/TV Shows — All Categories” | ✅ Guard |
+| `/:mediaType/:category` | “Movies/TV Shows — (categoria)” | ✅ Guard |
+| `/:mediaType/details/:id` | Details | ✅ Guard |
+| `/favorites` | Favorites | ✅ Guard |
+| `/401` | Not Authorized | — |
+| `/**` | Not Found | — |
+
+> `ListPageTitleResolver` resolve dinamicamente os títulos de listagem com base em `mediaType` e `category`.
+
+---
+
+## 🏗️ Principais pastas/peças
+
+```
+src/
+├─ app/
+│  ├─ components/
+│  │  ├─ main-menu/        # Vitrine inicial com populares
+│  │  ├─ medias/           # Carrosséis por tipo/categoria
+│  │  ├─ list-medias/      # Lista paginada com "Load More"
+│  │  ├─ media-details/    # Detalhes (videos, credits)
+│  │  ├─ favorites/        # Favoritos (LocalStorage)
+│  │  ├─ search/           # Busca reativa
+│  │  ├─ navbar/ footer/   # Layout e navegação
+│  │  └─ language-selector/# Seletor e persistência de idioma
+│  ├─ directives/
+│  │  └─ hover-scroll/     # Diretiva clqt-hover-scroll
+│  ├─ pipes/
+│  │  └─ tmdb-percent/     # vote_average → percent
+│  ├─ services/
+│  │  ├─ tmdb.service.ts   # Chamadas à API TMDB
+│  │  ├─ language.service.ts
+│  │  ├─ local-storage.service.ts
+│  │  └─ cache.service.ts
+│  ├─ guards/
+│  │  └─ token-is-valid.guard.ts
+│  └─ routing/
+│     ├─ app.routes.ts
+│     └─ route-title.resolver.ts
+├─ environments/
+│  ├─ environment.ts
+│  └─ environment.development.ts
+└─ _variaveis.scss          # Paleta/gradientes/constantes
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## ⚙️ Configuração (TMDB API Key)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+O app usa o **TMDB Read Access Token** no header `Authorization: Bearer <TOKEN>`.
 
-```bash
-ng generate component component-name
+### Arquivos de environment
+
+**`src/environments/environment.development.ts`**
+```ts
+export const environment = {
+  production: false,
+  apiKey: `Bearer PlaceHereYourTMDBAPIReadAccessToken`,
+};
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+**`src/environments/environment.ts`**
+```ts
+export const environment = {
+  production: true,
+  apiKey: `Bearer PlaceHereYourTMDBAPIReadAccessToken`,
+};
 ```
 
-## Building
+> Mantenha o `example.environments.ts` apenas como **referência** e **não** o importe no app.
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 🚀 Como executar
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+1. **Pré‑requisitos**
+   - **Node 20+** e **npm 10+**
+   - **Angular CLI 20+** (`npm i -g @angular/cli`)
 
-## Running unit tests
+2. **Instalar dependências**
+   ```bash
+   npm install
+   ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+3. **Configurar environments** (passo anterior).
 
-```bash
-ng test
-```
+4. **Subir o dev-server**
+   ```bash
+   npm start
+   # ou
+   ng serve
+   ```
 
-## Running end-to-end tests
+5. **Acessar**: http://localhost:4200
 
-For end-to-end (e2e) testing, run:
+> As rotas protegidas validam o token ao entrar. Token inválido → toast de erro + redirect **/401**.
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🧰 Tecnologias
 
-## Additional Resources
+- **Angular 20 (standalone components)**, **RxJS**
+- **HttpClient**, **ngx-toastr**, **bootstrap-icons**
+- **SCSS modular** com `_variaveis.scss`
+- **LocalStorage** + cache em memória
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---

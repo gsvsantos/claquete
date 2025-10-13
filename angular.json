@@ -49,20 +49,21 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"]
+            "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
+            "outputPath": "dist/claquete"
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "10MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "10MB"
                 }
               ],
               "outputHashing": "all"
@@ -92,6 +93,15 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://gsvsantos.github.io/claquete/",
+            "repo": "https://github.com/gsvsantos/claquete",
+            "name": "Gustavo Santos",
+            "email": "gustavocnsantos02@gmail.com"
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"

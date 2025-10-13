@@ -1,4 +1,4 @@
 export const environment = {
-  procution: true,
-  apiKey: `Bearer YourTMDBAPIReadAccessToken`,
+  production: true,
+  apiKey: `Bearer PlaceHereYourTMDBAPIReadAccessToken`,
 };

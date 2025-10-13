@@ -14,7 +14,7 @@ import {
   tap,
   toArray,
 } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Media, ThisMediaDetails } from '../models/media';
 import {
   TMDBApiMediaDetailsResponse,
