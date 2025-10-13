@@ -1,8 +1,8 @@
 <div class="main">
-  <div class="content">
+  <div class="content" *transloco="let t">
     <gs-buttons
       [buttonType]="buttonType.Default"
-      text="Back to Main Menu"
+      [text]="t('common.buttons.back-to-main-menu')"
       bootstrapIcon="bi-chevron-double-left"
       color="#41C8D5"
       textColor="#FFFFFF"
@@ -11,7 +11,7 @@
       [variant]="variantType.Outline"
       (click)="tryAgain()"
     ></gs-buttons>
-    <h1>Opsie!</h1>
-    <h2>404 Not Found</h2>
+    <h1>{{ t('not-found.title') }}</h1>
+    <h2>{{ t('not-found.subtitle') }}</h2>
   </div>
 </div>

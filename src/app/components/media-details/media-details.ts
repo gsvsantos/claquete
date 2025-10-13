@@ -8,10 +8,11 @@ import { TmdbPercentPipe } from '../../pipes/tmdb-percent.pipe';
 import { TMDBApiCast, TMDBApiCrew, TMDBApiVideo } from '../../models/tmdb-api';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { gsButtonTypeEnum, gsVariant, GsButtons, gsTabTargetEnum } from 'gs-buttons';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-media-details',
-  imports: [TmdbPercentPipe, DatePipe, AsyncPipe, GsButtons],
+  imports: [TmdbPercentPipe, DatePipe, AsyncPipe, GsButtons, TranslocoModule],
   templateUrl: './media-details.html',
   styleUrl: './media-details.scss',
 })

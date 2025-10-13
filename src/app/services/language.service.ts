@@ -1,16 +1,22 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export type TmdbLanguageCode = `${string}-${string}`;
 
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
+  private readonly translocoService = inject(TranslocoService);
   private readonly storageKey: string = 'tmdb.language';
   private readonly currentLanguageSubject: BehaviorSubject<TmdbLanguageCode> =
     new BehaviorSubject<TmdbLanguageCode>(this.loadInitialLanguage());
 
   public readonly currentLanguage$: Observable<TmdbLanguageCode> =
     this.currentLanguageSubject.asObservable();
+
+  public constructor() {
+    this.translocoService.setActiveLang(this.getCurrentLanguage());
+  }
 
   public getCurrentLanguage(): TmdbLanguageCode {
     return this.currentLanguageSubject.value;
@@ -21,6 +27,7 @@ export class LanguageService {
       throw new Error(`Invalid language: ${newLanguageCode}`);
     }
     localStorage.setItem(this.storageKey, newLanguageCode);
+    this.translocoService.setActiveLang(newLanguageCode);
     this.currentLanguageSubject.next(newLanguageCode);
   }
 

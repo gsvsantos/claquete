@@ -112,20 +112,20 @@
     background: rgba($superficie-destaque, 0.9);
     transform: translateX(2px);
   }
-  &.pagina-atual {
+  &.active-page {
     color: $pagina-ativa;
     background: rgba($superficie-destaque, 0.55);
   }
 }
 
-.pagina-atual {
+.active-page {
   color: $pagina-ativa;
   text-shadow:
     0 0 1px $pagina-ativa-sombra,
     0 0 2px $pagina-ativa-sombra;
 }
 
-.nav-item.dropdown.pagina-atual > .dropdown-btn {
+.nav-item.dropdown.active-page > .dropdown-btn {
   color: $pagina-ativa;
   font-weight: 600;
   text-shadow:
@@ -162,17 +162,14 @@
 }
 
 @media (max-width: 982px) {
-  .sub-media {
-    flex-wrap: wrap;
-    row-gap: 8px;
-  }
   .nav-wrapper {
-    order: 0;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 10px;
   }
   .tools {
     order: 1;
-    width: 100%;
     justify-content: flex-end;
   }
   .search {
@@ -184,10 +181,9 @@
 }
 
 @media (max-width: 768px) {
-  .nav-wrapper {
-    display: block;
+  .sub-media {
+    flex-direction: column;
   }
-
   .logo-link {
     justify-content: center;
   }

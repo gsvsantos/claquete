@@ -5,10 +5,11 @@ import { Carousel } from '../carousel/carousel';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { MediaTypes } from '../../models/media';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-medias',
-  imports: [Carousel, AsyncPipe],
+  imports: [Carousel, AsyncPipe, TranslocoModule],
   templateUrl: './medias.html',
   styleUrl: './medias.scss',
 })

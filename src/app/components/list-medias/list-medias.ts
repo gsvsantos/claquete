@@ -6,10 +6,11 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 import { TMDBService } from '../../services/tmdb.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MediaCard } from '../media-card/media-card';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-list-medias',
-  imports: [AsyncPipe, GsButtons, MediaCard],
+  imports: [AsyncPipe, GsButtons, MediaCard, TranslocoModule],
   templateUrl: './list-medias.html',
   styleUrl: './list-medias.scss',
 })

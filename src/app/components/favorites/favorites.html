@@ -1,18 +1,18 @@
 <div class="main">
-  <div class="content">
+  <div class="content" *transloco="let t; prefix: 'favorites'">
     @if (favoritesByType$ | async; as fav) {
       @if (!fav.movies.length && !fav.tvShows.length) {
-        <p class="empty">You need to favorite some media first.</p>
+        <p class="empty">{{ t('empty') }}</p>
       }
       @if (fav.movies.length) {
         <div class="movies">
-          <h2 class="section-title">Movies</h2>
+          <h2 class="section-title">{{ t('section-title.movies') }}</h2>
           <clqt-carousel [medias$]="movies$" mediaType="movie"></clqt-carousel>
         </div>
       }
       @if (fav.tvShows.length) {
         <div class="tv-shows">
-          <h2 class="section-title">TV Shows</h2>
+          <h2 class="section-title">{{ t('section-title.tv-shows') }}</h2>
           <clqt-carousel [medias$]="tvShows$" mediaType="tv"></clqt-carousel>
         </div>
       }

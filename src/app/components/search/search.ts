@@ -16,11 +16,12 @@ import {
 import { TMDBService } from '../../services/tmdb.service';
 import { LanguageService, TmdbLanguageCode } from '../../services/language.service';
 import { SearchItemView, TMDBApiSearchMultiResponse } from '../../models/tmdb-api';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-search',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslocoModule],
   templateUrl: './search.html',
   styleUrl: './search.scss',
 })
@@ -40,7 +41,7 @@ export class Search {
 
   public readonly queryText$: Observable<string> = this.searchControl.valueChanges.pipe(
     distinctUntilChanged(),
-    debounceTime(300),
+    debounceTime(600),
     map((text: string) => text.trim()),
     startWith(''),
   );

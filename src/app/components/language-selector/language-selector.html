@@ -4,6 +4,6 @@
   (ngModelChange)="onLanguageChange($event)"
 >
   @for (language of availableLanguages; track language.code) {
-    <option [value]="language.code">{{ language.label }}</option>
+    <option [value]="language.code"> <i></i>{{ language.label }}</option>
   }
 </select>

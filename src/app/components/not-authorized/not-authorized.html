@@ -1,8 +1,8 @@
 <div class="main">
-  <div class="content">
+  <div class="content" *transloco="let t">
     <gs-buttons
       [buttonType]="buttonType.Default"
-      text="Try Again"
+      [text]="t('common.buttons.try-again')"
       bootstrapIcon="bi-arrow-clockwise"
       color="#41C8D5"
       textColor="#FFFFFF"
@@ -11,9 +11,9 @@
       [variant]="variantType.Outline"
       (click)="tryAgain()"
     ></gs-buttons>
-    <h1>Opsie!</h1>
-    <h2>Invalid TMDB_API Token</h2>
-    <p>You must be granted a valid TMDB_API Read Access Token..</p>
-    <p>Check the env "example.environments".</p>
+    <h1>{{ t('not-authorized.title') }}</h1>
+    <h2>{{ t('not-authorized.subtitle') }}</h2>
+    <p>{{ t('not-authorized.message-must-be-granted') }}</p>
+    <p>{{ t('not-authorized.message-check-env') }}</p>
   </div>
 </div>

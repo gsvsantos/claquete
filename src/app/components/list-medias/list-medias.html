@@ -1,9 +1,9 @@
 <div class="main">
-  <div class="content">
+  <div class="content" *transloco="let t">
     <gs-buttons
       class="btn-back"
       [buttonType]="buttonType.Link"
-      text="Back"
+      [text]="t('common.buttons.back')"
       bootstrapIcon="bi-chevron-double-left"
       color="#41C8D5"
       textColor="#FFFFFF"
@@ -21,7 +21,7 @@
     <gs-buttons
       class="btn-loadMore"
       [buttonType]="buttonType.Default"
-      text="Load More"
+      [text]="t('common.buttons.load-more')"
       bootstrapIcon="bi-arrow-clockwise"
       color="#41C8D5"
       textColor="#FFFFFF"

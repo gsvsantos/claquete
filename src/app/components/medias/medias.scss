@@ -6,15 +6,17 @@
   background: $gradient-background;
 }
 
-.popularMovies,
-.topRatedMovies,
+.popularMedias,
+.topRatedMedias,
 .upcomingMovies,
-.nowPlayingMovies {
+.nowPlayingMovies,
+.airingTVShow,
+.on-airTVShow {
   display: flex;
   flex-direction: column;
   padding: 10px;
 
-  h1 {
+  .title {
     align-self: center;
   }
 }

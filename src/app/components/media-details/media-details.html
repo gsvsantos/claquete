@@ -1,9 +1,9 @@
 <div class="main">
-  <div class="content">
+  <div class="content" *transloco="let t">
     <gs-buttons
       class="btn-back"
       [buttonType]="buttonType.Link"
-      text="Back"
+      [text]="t('common.buttons.back')"
       bootstrapIcon="bi-chevron-double-left"
       color="#41C8D5"
       textColor="#FFFFFF"
@@ -28,9 +28,9 @@
             <gs-buttons
               class="fav-btn"
               [buttonType]="buttonType.Default"
+              text=""
               buttonHtmlType="button"
               [variant]="mediaDetails.favorite ? variantType.Solid : variantType.Outline"
-              text=""
               [bootstrapIcon]="mediaDetails.favorite ? 'bi-heart-fill' : 'bi-heart'"
               buttonId="fav-btn"
               color="#ff5a79"
@@ -40,7 +40,7 @@
             </gs-buttons>
           </h1>
           <p class="overview">
-            {{ mediaDetails.overview || 'Sinopse não disponível.' }}
+            {{ mediaDetails.overview || t('media-details.fallback.overview-not-available') }}
           </p>
           <div class="infos">
             <div class="vote-average">
@@ -50,24 +50,33 @@
 
             @if (mediaDetails.vote_count !== undefined) {
               <div class="vote-count">
-                <span>{{ mediaDetails.vote_count }} votes</span>
+                <span>{{
+                  t('media-details.format.vote-count', { count: mediaDetails.vote_count })
+                }}</span>
               </div>
             }
 
             @if (mediaDetails.release_date || mediaDetails.first_air_date) {
               <div class="release-date">
                 <span>{{
-                  mediaDetails.release_date ?? mediaDetails.first_air_date | date: 'yyyy-MM-dd'
+                  mediaDetails.release_date ?? mediaDetails.first_air_date
+                    | date: t('media-details.format.release-date')
                 }}</span>
               </div>
             }
             @if (mediaDetails.runtime) {
               <div class="runtime">
-                <span>{{ mediaDetails.runtime }} min</span>
+                <span>{{
+                  t('media-details.format.runtime-minutes', { minutes: mediaDetails.runtime })
+                }}</span>
               </div>
             } @else if (mediaDetails.episode_run_time?.length) {
               <div class="runtime">
-                <span>{{ mediaDetails?.episode_run_time?.[0] }} min/ep</span>
+                <span>{{
+                  t('media-details.format.runtime-minutes-per-episode', {
+                    minutes: mediaDetails?.episode_run_time?.[0],
+                  })
+                }}</span>
               </div>
             }
           </div>
@@ -78,7 +87,7 @@
               }
             </ul>
           }
-          <h2 class="section-title">Cast</h2>
+          <h2 class="section-title">{{ t('media-details.section-title.cast') }}</h2>
           @if (topCast$ | async; as topCast) {
             @if (topCast.length) {
               <ul class="people-grid">
@@ -102,10 +111,10 @@
                 }
               </ul>
             } @else {
-              <p class="empty">Cast not found.</p>
+              <p class="empty">{{ t('media-details.empty.cast-not-found') }}</p>
             }
           }
-          <h2 class="section-title">Crew</h2>
+          <h2 class="section-title">{{ t('media-details.section-title.crew') }}</h2>
           @if (mainCrew$ | async; as mainCrew) {
             @if (mainCrew.length) {
               <ul class="crew-list">
@@ -117,10 +126,10 @@
                 }
               </ul>
             } @else {
-              <p class="empty">Crew not found.</p>
+              <p class="empty">{{ t('media-details.empty.crew-not-found') }}</p>
             }
           }
-          <h2 class="section-title">Videos</h2>
+          <h2 class="section-title">{{ t('media-details.section-title.videos') }}</h2>
           @if (videosTrailerClip$ | async; as videos) {
             @if (videos.length) {
               <div class="videos-grid">
@@ -142,13 +151,13 @@
                 }
               </div>
             } @else {
-              <p class="empty">Videos not found.</p>
+              <p class="empty">{{ t('media-details.empty.videos-not-found') }}</p>
             }
           }
         </div>
       </div>
     } @else {
-      <p class="empty required">Select a <strong>movie or tv show</strong> to see the details.</p>
+      <p class="empty required" [innerHTML]="t('common.messages.select-media-to-see-details')"></p>
     }
   </div>
 </div>

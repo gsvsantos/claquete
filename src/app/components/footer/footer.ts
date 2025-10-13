@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { LanguageSelector } from "../language-selector/language-selector";
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-footer',
-  imports: [LanguageSelector],
+  imports: [LanguageSelector, TranslocoModule],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
 })

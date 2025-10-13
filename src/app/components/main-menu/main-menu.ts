@@ -3,10 +3,11 @@ import { Observable } from 'rxjs';
 import { Media } from '../../models/media';
 import { TMDBService } from '../../services/tmdb.service';
 import { Carousel } from '../carousel/carousel';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-main-menu',
-  imports: [Carousel],
+  imports: [Carousel, TranslocoModule],
   templateUrl: './main-menu.html',
   styleUrl: './main-menu.scss',
 })
