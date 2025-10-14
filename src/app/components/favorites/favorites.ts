@@ -5,10 +5,11 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { AsyncPipe } from '@angular/common';
 import { Carousel } from '../../shared/carousel/carousel';
 import { TranslocoModule } from '@jsverse/transloco';
+import { MediaCard } from '../../shared/media-card/media-card';
 
 @Component({
   selector: 'app-favorites',
-  imports: [AsyncPipe, Carousel, TranslocoModule],
+  imports: [AsyncPipe, Carousel, TranslocoModule, MediaCard],
   templateUrl: './favorites.html',
   styleUrl: './favorites.scss',
 })
