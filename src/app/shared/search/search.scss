@@ -1,4 +1,5 @@
 @use '../../../variaveis' as *;
+@use 'sass:color';
 
 :host {
   display: block;
@@ -20,7 +21,7 @@
     color: rgba($texto-principal, 0.7);
   }
   &:hover {
-    border-color: lighten($borda, 8%);
+    border-color: color.adjust($borda, $lightness: 8%);
   }
   &:focus {
     outline: none;

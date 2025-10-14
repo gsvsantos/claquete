@@ -1,36 +1,58 @@
 import { Routes } from '@angular/router';
-import { MainMenu } from '../components/main-menu/main-menu';
-import { Medias as Medias } from '../components/medias/medias';
-import { ListMedias } from '../components/list-medias/list-medias';
-import { MediaDetails } from '../components/media-details/media-details';
-import { Favorites } from '../components/favorites/favorites';
 import { ListPageTitleResolver } from './route-title.resolver';
-import { NotFound } from '../components/not-found/not-found';
-import { NotAuthorized } from '../components/not-authorized/not-authorized';
 import { tokenIsValidGuard } from '../guards/token-is-valid.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'main-menu', pathMatch: 'full' },
-  { path: 'main-menu', component: MainMenu, title: 'Claquete', canActivate: [tokenIsValidGuard] },
+  {
+    path: 'main-menu',
+    loadComponent: () =>
+      import('../components/main-menu/main-menu').then((component) => component.MainMenu),
+    title: 'Claquete',
+    canActivate: [tokenIsValidGuard],
+  },
   {
     path: ':mediaType/all',
-    component: Medias,
+    loadComponent: () =>
+      import('../components/medias/medias').then((component) => component.Medias),
     title: ListPageTitleResolver,
     canActivate: [tokenIsValidGuard],
   },
   {
     path: ':mediaType/:category',
-    component: ListMedias,
+    loadComponent: () =>
+      import('../components/list-medias/list-medias').then((component) => component.ListMedias),
     title: ListPageTitleResolver,
     canActivate: [tokenIsValidGuard],
   },
   {
     path: ':mediaType/details/:id',
-    component: MediaDetails,
+    loadComponent: () =>
+      import('../components/media-details/media-details').then(
+        (component) => component.MediaDetails,
+      ),
     title: 'Details',
     canActivate: [tokenIsValidGuard],
   },
-  { path: 'favorites', component: Favorites, title: 'Favorites', canActivate: [tokenIsValidGuard] },
-  { path: '401', component: NotAuthorized, title: 'Not Authorized' },
-  { path: '**', component: NotFound, title: 'Not Found' },
+  {
+    path: 'favorites',
+    loadComponent: () =>
+      import('../components/favorites/favorites').then((component) => component.Favorites),
+    title: 'Favorites',
+    canActivate: [tokenIsValidGuard],
+  },
+  {
+    path: '401',
+    loadComponent: () =>
+      import('../components/not-authorized/not-authorized').then(
+        (component) => component.NotAuthorized,
+      ),
+    title: 'Not Authorized',
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('../components/not-found/not-found').then((component) => component.NotFound),
+    title: 'Not Found',
+  },
 ];

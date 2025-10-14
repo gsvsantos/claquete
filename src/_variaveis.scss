@@ -1,25 +1,35 @@
+@use 'sass:color';
+
 $branco: #f5f5f5;
 $preto: #000000;
 $primaria: #006da4;
-$primaria-active: #006494; 
-$pagina-ativa: lighten($primaria, 10%);
-$pagina-ativa-sombra: darken($primaria, 12%);
-$hover: lighten($primaria, 18%);
-$hover-titulo: lighten($primaria, 25%);
+$primaria-active: #006494;
+
+$pagina-ativa: color.adjust($primaria, $lightness: 10%);
+$pagina-ativa-sombra: color.adjust($primaria, $lightness: -12%); // escurece 12%
+
+$hover: color.adjust($primaria, $lightness: 18%);
+$hover-titulo: color.adjust($primaria, $lightness: 25%);
+
 $fundo: #032541;
 $superficie: #003554;
 $superficie-destaque: #004d74;
 $borda: #0f5b86;
+
 $texto-principal: $branco;
-$texto-suave: mix($branco, $superficie, 85%); 
+$texto-suave: color.mix($branco, $superficie, $weight: 85%); // 85% do $branco
 $texto-invertido: #000000;
+
 $perigo: #e53935;
 $sucesso: #43a047;
 $aviso: #fb8c00;
+
 $icone-ver: #00c378;
 $icone-editar: #00bcd4;
 $icone-excluir: #f44336;
-$sombra: -4px 8px 24px hsla(210, 12%, 10%, 0.25); 
+
+$sombra: -4px 8px 24px hsla(210, 12%, 10%, 0.25);
+
 $transicao-rapida: 0.2s ease;
 $transicao: 0.25s ease;
 $transicao-lenta: 0.5s ease-in-out;
