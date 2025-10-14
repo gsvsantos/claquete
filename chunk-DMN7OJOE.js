@@ -1,0 +1,1 @@
+import{fa as t}from"./chunk-HUFLTYHU.js";var i=class r{transform(e){return e==null?"\u2014":`${Math.round(e*10)}%`}static \u0275fac=function(n){return new(n||r)};static \u0275pipe=t({name:"tmdbPercent",type:r,pure:!0})};export{i as a};
