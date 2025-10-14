@@ -97,7 +97,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "baseHref": "https://gsvsantos.github.io/claquete/",
+            "baseHref": "/claquete/",
             "repo": "https://github.com/gsvsantos/claquete",
             "name": "Gustavo Santos",
             "email": "gustavocnsantos02@gmail.com"
