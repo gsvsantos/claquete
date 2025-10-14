@@ -1,11 +1,15 @@
 <div class="main">
   <div class="content" *transloco="let t; prefix: 'main-menu.section-title'">
     <div class="popularMovies">
-      <h2 class="section-title">{{ t('popular-movies') }}</h2>
+      <a [routerLink]="['/', 'movie', 'popular']">
+        <h2 class="section-title">{{ t('popular-movies') }}</h2>
+      </a>
       <clqt-carousel [medias$]="popularMovies$" mediaType="movie"></clqt-carousel>
     </div>
-    <div class="topRatedMovies">
-      <h2 class="section-title">{{ t('popular-tv-shows') }}</h2>
+    <div class="popularTvShows">
+      <a [routerLink]="['/', 'tv', 'popular']"
+        ><h2 class="section-title">{{ t('popular-tv-shows') }}</h2>
+      </a>
       <clqt-carousel [medias$]="popularTVShows$" mediaType="tv"></clqt-carousel>
     </div>
   </div>

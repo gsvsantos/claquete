@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from '../../models/media';
 import { TMDBService } from '../../services/tmdb.service';
-import { Carousel } from '../carousel/carousel';
+import { Carousel } from '../../shared/carousel/carousel';
 import { TranslocoModule } from '@jsverse/transloco';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'clqt-main-menu',
-  imports: [Carousel, TranslocoModule],
+  imports: [Carousel, TranslocoModule, RouterLink],
   templateUrl: './main-menu.html',
   styleUrl: './main-menu.scss',
 })

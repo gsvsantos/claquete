@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { distinctUntilChanged, filter, map, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { TMDBService } from '../../services/tmdb.service';
-import { Carousel } from '../carousel/carousel';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Carousel } from '../../shared/carousel/carousel';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { MediaTypes } from '../../models/media';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'clqt-medias',
-  imports: [Carousel, AsyncPipe, TranslocoModule],
+  imports: [Carousel, AsyncPipe, TranslocoModule, RouterLink],
   templateUrl: './medias.html',
   styleUrl: './medias.scss',
 })
@@ -21,6 +21,7 @@ export class Medias {
 
   public readonly mediaType$ = this.route.paramMap.pipe(
     distinctUntilChanged(),
+    debounceTime(200),
     map((params: ParamMap) => {
       const mediaType = params.get('mediaType');
 

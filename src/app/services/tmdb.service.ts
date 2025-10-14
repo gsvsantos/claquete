@@ -172,7 +172,7 @@ export class TMDBService {
     );
     const favoritesToFetch: Media[] = Array.from(uniqueMap.values());
 
-    const MAX_CONCURRENT_REQUESTS: number = 5;
+    const maxCurrentRequests: number = 5;
 
     return from(favoritesToFetch).pipe(
       mergeMap(
@@ -180,7 +180,7 @@ export class TMDBService {
           this.getMediaDetailsByID(favoriteMedia.mediaType, favoriteMedia.id).pipe(
             catchError(() => of<Media>({ ...favoriteMedia, favorite: true })),
           ),
-        MAX_CONCURRENT_REQUESTS,
+        maxCurrentRequests,
       ),
       toArray(),
       tap((updatedFavorites: Media[]) => {

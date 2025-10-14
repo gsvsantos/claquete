@@ -5,7 +5,7 @@ import { Media } from '../../models/media';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { TMDBService } from '../../services/tmdb.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MediaCard } from '../media-card/media-card';
+import { MediaCard } from '../../shared/media-card/media-card';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({

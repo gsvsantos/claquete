@@ -13,7 +13,6 @@ import { MediaCard } from '../media-card/media-card';
 })
 export class Carousel {
   @Input({ required: true }) public medias$?: Observable<Media[]>;
-  @Input({ required: true }) public mediaType?: string;
   @ViewChild('carousel') public carouselRef!: ElementRef<HTMLDivElement>;
 
   public readonly scrollAmount = 300;

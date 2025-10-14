@@ -1,5 +1,13 @@
 @use '../../../variaveis' as *;
 
+a {
+  all: inherit;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
 .main {
   min-height: 100vh;
   padding: 16px;
@@ -11,14 +19,22 @@
 }
 
 .popularMovies,
-.topRatedMovies {
+.popularTvShows {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  
+  .section-title {
+    transition: $transicao-rapida;
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .section-title:hover {
+    color: $hover;
+    cursor: pointer;
+    transform: scale(0.98);
+  }
 }
 
-.section-title {
-  margin: 12px 0 8px;
-  font-weight: 800;
-  align-self: center;
-}

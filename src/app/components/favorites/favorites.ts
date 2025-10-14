@@ -3,7 +3,7 @@ import { map, Observable, shareReplay } from 'rxjs';
 import { Media } from '../../models/media';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { AsyncPipe } from '@angular/common';
-import { Carousel } from '../carousel/carousel';
+import { Carousel } from '../../shared/carousel/carousel';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({

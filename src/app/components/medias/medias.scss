@@ -1,5 +1,13 @@
 @use '../../../variaveis' as *;
 
+a {
+  all: inherit;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -17,6 +25,15 @@
   padding: 10px;
 
   .title {
-    align-self: center;
+    transition: $transicao-rapida;
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .title:hover {
+    color: $hover;
+    cursor: pointer;
+    transform: scale(0.98);
   }
 }

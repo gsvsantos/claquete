@@ -1,29 +1,41 @@
 <div class="card" *transloco="let t; prefix: 'medias.section-title'">
   <div class="popularMedias">
-    <h1 class="title">{{t('popular')}}</h1>
-    <clqt-carousel [medias$]="popularMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
+    <a [routerLink]="['/', mediaTypeStr, 'popular']">
+      <h1 class="title">{{ t('popular') }}</h1>
+    </a>
+    <clqt-carousel [medias$]="popularMedias$"></clqt-carousel>
   </div>
   <div class="topRatedMedias">
-    <h1 class="title">{{t('top-rated')}}</h1>
-    <clqt-carousel [medias$]="topRatedMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
+    <a [routerLink]="['/', mediaTypeStr, 'popular']">
+      <h1 class="title">{{ t('top-rated') }}</h1>
+    </a>
+    <clqt-carousel [medias$]="topRatedMedias$"></clqt-carousel>
   </div>
   @if ((mediaType$ | async) === 'movie') {
     <div class="upcomingMovies">
-      <h1 class="title">{{t('upcoming')}}</h1>
-      <clqt-carousel [medias$]="upcomingMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
+      <a [routerLink]="['/', mediaTypeStr, 'popular']">
+        <h1 class="title">{{ t('upcoming') }}</h1>
+      </a>
+      <clqt-carousel [medias$]="upcomingMedias$"></clqt-carousel>
     </div>
     <div class="nowPlayingMovies">
-      <h1 class="title">{{t('now-playing')}}</h1>
-      <clqt-carousel [medias$]="nowPlayingMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
+      <a [routerLink]="['/', mediaTypeStr, 'popular']">
+        <h1 class="title">{{ t('now-playing') }}</h1>
+      </a>
+      <clqt-carousel [medias$]="nowPlayingMedias$"></clqt-carousel>
     </div>
   } @else {
     <div class="airingTVShow">
-      <h1 class="title">{{t('airing')}}</h1>
-      <clqt-carousel [medias$]="airingTodayMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
+      <a [routerLink]="['/', mediaTypeStr, 'popular']">
+        <h1 class="title">{{ t('airing') }}</h1>
+      </a>
+      <clqt-carousel [medias$]="airingTodayMedias$"></clqt-carousel>
     </div>
     <div class="on-airTVShow">
-      <h1 class="title">{{t('on-air')}}</h1>
-      <clqt-carousel [medias$]="onTheAirMedias$" [mediaType]="mediaTypeStr"></clqt-carousel>
+      <a [routerLink]="['/', mediaTypeStr, 'popular']">
+        <h1 class="title">{{ t('on-air') }}</h1>
+      </a>
+      <clqt-carousel [medias$]="onTheAirMedias$"></clqt-carousel>
     </div>
   }
 </div>
