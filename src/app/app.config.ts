@@ -26,7 +26,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    provideHttpClient(),
     provideTransloco({
       config: {
         availableLangs: ['en-US', 'pt-BR', 'es-ES'],
