@@ -12,7 +12,7 @@ O **Claquete (CLQT)** é um SPA em **Angular 20** para explorar o catálogo do *
 - **Busca reativa** com debounce e resultados tipados (filtra movie/tv).
 - **Detalhes da mídia** com `videos` (trailers/clips) e `credits` (elenco/equipe).
 - **Favoritos** com persistência em **LocalStorage**.
-- **Seleção de idioma** (`en-US`, `pt-BR`, …) com persistência.
+- **Seleção de idioma** (`en-US`, `pt-BR`, `es-ES`) com persistência.
 - **Proteção de rotas** via **verificação da API Key** da TMDB.
 - **Toasts** de feedback (ngx-toastr).
 - **Carrosséis** com navegação por **hover** (`clqt-hover-scroll`).
@@ -21,15 +21,15 @@ O **Claquete (CLQT)** é um SPA em **Angular 20** para explorar o catálogo do *
 
 ## 🧭 Rotas
 
-| Caminho | Título | Proteção |
-|---|---|---|
-| `/main-menu` | Main Menu | ✅ Guard |
-| `/:mediaType/all` | “Movies/TV Shows — All Categories” | ✅ Guard |
-| `/:mediaType/:category` | “Movies/TV Shows — (categoria)” | ✅ Guard |
-| `/:mediaType/details/:id` | Details | ✅ Guard |
-| `/favorites` | Favorites | ✅ Guard |
-| `/401` | Not Authorized | — |
-| `/**` | Not Found | — |
+| Caminho                   | Título                             | Proteção |
+| ------------------------- | ---------------------------------- | -------- |
+| `/main-menu`              | Main Menu                          | ✅ Guard |
+| `/:mediaType/all`         | “Movies/TV Shows — All Categories” | ✅ Guard |
+| `/:mediaType/:category`   | “Movies/TV Shows — (categoria)”    | ✅ Guard |
+| `/:mediaType/details/:id` | Details                            | ✅ Guard |
+| `/favorites`              | Favorites                          | ✅ Guard |
+| `/401`                    | Not Authorized                     | —        |
+| `/**`                     | Not Found                          | —        |
 
 > `ListPageTitleResolver` resolve dinamicamente os títulos de listagem com base em `mediaType` e `category`.
 
@@ -41,20 +41,26 @@ O **Claquete (CLQT)** é um SPA em **Angular 20** para explorar o catálogo do *
 src/
 ├─ app/
 │  ├─ components/
-│  │  ├─ main-menu/        # Vitrine inicial com populares
-│  │  ├─ medias/           # Carrosséis por tipo/categoria
-│  │  ├─ list-medias/      # Lista paginada com "Load More"
-│  │  ├─ media-details/    # Detalhes (videos, credits)
-│  │  ├─ favorites/        # Favoritos (LocalStorage)
-│  │  ├─ search/           # Busca reativa
-│  │  ├─ navbar/ footer/   # Layout e navegação
-│  │  └─ language-selector/# Seletor e persistência de idioma
+│  │  ├─ main-menu/
+│  │  ├─ medias/
+│  │  ├─ list-medias/
+│  │  ├─ media-details/
+│  │  ├─ favorites/
+│  │  ├─ not-authorized/
+│  │  └─ not-found/
+│  ├─ shared/
+│  │  ├─ carousel/
+│  │  ├─ footer/
+│  │  ├─ language-selector/
+│  │  ├─ media-card/
+│  │  ├─ navbar/
+│  │  └─ search/
 │  ├─ directives/
-│  │  └─ hover-scroll/     # Diretiva clqt-hover-scroll
+│  │  └─ hover-scroll.ts
 │  ├─ pipes/
-│  │  └─ tmdb-percent/     # vote_average → percent
+│  │  └─ tmdb-percent.pipe.ts
 │  ├─ services/
-│  │  ├─ tmdb.service.ts   # Chamadas à API TMDB
+│  │  ├─ tmdb.service.ts
 │  │  ├─ language.service.ts
 │  │  ├─ local-storage.service.ts
 │  │  └─ cache.service.ts
@@ -64,9 +70,8 @@ src/
 │     ├─ app.routes.ts
 │     └─ route-title.resolver.ts
 ├─ environments/
-│  ├─ environment.ts
-│  └─ environment.development.ts
-└─ _variaveis.scss          # Paleta/gradientes/constantes
+│  └─ example.environments.ts    # copie para environment.ts e environment.development.ts
+└─ _variaveis.scss
 ```
 
 ---
@@ -78,6 +83,7 @@ O app usa o **TMDB Read Access Token** no header `Authorization: Bearer <TOKEN>`
 ### Arquivos de environment
 
 **`src/environments/environment.development.ts`**
+
 ```ts
 export const environment = {
   production: false,
@@ -86,6 +92,7 @@ export const environment = {
 ```
 
 **`src/environments/environment.ts`**
+
 ```ts
 export const environment = {
   production: true,
@@ -93,7 +100,7 @@ export const environment = {
 };
 ```
 
-> Mantenha o `example.environments.ts` apenas como **referência** e **não** o importe no app.
+> O `angular.json` já contém o `fileReplacements` para usar o `.development.ts` no modo dev.
 
 ---
 
@@ -102,8 +109,11 @@ export const environment = {
 1. **Pré‑requisitos**
    - **Node 20+** e **npm 10+**
    - **Angular CLI 20+** (`npm i -g @angular/cli`)
+   - **Sem CLI global:** os comandos usam `npx ng` (usa a versão local do Angular CLI do projeto).
+     > _Opcional:_ `npm i -g @angular/cli` se preferir `ng` global.
 
 2. **Instalar dependências**
+
    ```bash
    npm install
    ```
@@ -111,10 +121,11 @@ export const environment = {
 3. **Configurar environments** (passo anterior).
 
 4. **Subir o dev-server**
+
    ```bash
    npm start
    # ou
-   ng serve
+   npx ng serve
    ```
 
 5. **Acessar**: http://localhost:4200
@@ -123,11 +134,20 @@ export const environment = {
 
 ---
 
+## 📦 Build & Deploy
+
+```bash
+npx ng build
+npx ng deploy   # requer angular-cli-ghpages;
+```
+
 ## 🧰 Tecnologias
 
-- **Angular 20 (standalone components)**, **RxJS**
-- **HttpClient**, **ngx-toastr**, **bootstrap-icons**
+- **Angular 20 (standalone)**, **RxJS**, **SCSS**
+- **HttpClient**, **ngx-toastr**, **bootstrap-icons**, **gs-buttons**
+- **i18n: Transloco (@jsverse/transloco)** — `en-US`, `pt-BR`, `es-ES` _(public/i18n/)_
 - **SCSS modular** com `_variaveis.scss`
-- **LocalStorage** + cache em memória
+- **ESLint + Prettier**
+- **LocalStorage + cache em memória**
 
 ---
