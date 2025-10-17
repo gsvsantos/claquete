@@ -14,6 +14,10 @@
   background: $gradient-background;
 }
 
+.btn-back {
+  align-self: flex-start;
+}
+
 .card {
   display: grid;
   grid-template-columns: clamp(300px, 30vw, 460px) 1fr;

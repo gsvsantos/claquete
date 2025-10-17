@@ -115,7 +115,15 @@ export class TMDBService {
 
     const cacheKey: string = this.buildCacheKey(url, params);
     const cachedList: Media[] | undefined = this.cache.get<Media[]>(cacheKey);
-    if (cachedList !== undefined) return of(cachedList.slice(0, quantity));
+    if (cachedList !== undefined) {
+      const favoriteIds = new Set(this.local.getFavoritesSnapshot().map((media) => media.id));
+
+      return of(
+        cachedList
+          .slice(0, quantity)
+          .map((media) => ({ ...media, favorite: favoriteIds.has(media.id) })),
+      );
+    }
 
     return this.http
       .get<TMDBApiMediaListResponse>(url, {
