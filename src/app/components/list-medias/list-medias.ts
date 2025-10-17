@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, Location } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap, tap } from 'rxjs';
 import { Media } from '../../models/media';
@@ -25,6 +25,7 @@ export class ListMedias implements OnInit {
   }
 
   private pageIndex: number = 1;
+  private readonly location = inject(Location);
   private readonly clickLoadMore$ = new Subject<void>();
   private readonly route = inject(ActivatedRoute);
   private readonly tMDBService = inject(TMDBService);
@@ -64,5 +65,9 @@ export class ListMedias implements OnInit {
     if (this.finalPageReached) return;
 
     this.clickLoadMore$.next();
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 }

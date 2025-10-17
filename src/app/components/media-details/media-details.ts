@@ -3,7 +3,7 @@ import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap
 import { ActivatedRoute } from '@angular/router';
 import { TMDBService } from '../../services/tmdb.service';
 import { MediaTypes, ThisMediaDetails } from '../../models/media';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, Location } from '@angular/common';
 import { TmdbPercentPipe } from '../../pipes/tmdb-percent.pipe';
 import { TMDBApiCast, TMDBApiCrew, TMDBApiVideo } from '../../models/tmdb-api';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -21,6 +21,7 @@ export class MediaDetails {
   public targetType = gsTabTargetEnum;
   public variantType = gsVariant;
 
+  private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
   private readonly tMDBService = inject(TMDBService);
   private readonly local = inject(LocalStorageService);
@@ -85,5 +86,9 @@ export class MediaDetails {
 
   public onToggleFavorite(media: ThisMediaDetails): void {
     this.local.changeMediaStatus(media);
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 }
