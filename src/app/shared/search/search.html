@@ -19,7 +19,7 @@
   } @else if (hasResults$ | async) {
     <ul class="results">
       @for (item of (viewItems$ | async)!; track item.id) {
-        <li class="result-item" [routerLink]="item.routerLink">
+        <li class="result-item" [routerLink]="item.routerLink" (click)="resetSearchControl()">
           @if (item.posterUrl) {
             <img class="poster" [src]="item.posterUrl" alt="" width="46" height="69" />
           }

@@ -9,7 +9,6 @@ import {
   finalize,
   map,
   shareReplay,
-  startWith,
   switchMap,
 } from 'rxjs/operators';
 
@@ -29,7 +28,10 @@ export class Search {
   private readonly tMDBService = inject(TMDBService);
   private readonly languageService = inject(LanguageService);
   private readonly languageCode$: Observable<TmdbLanguageCode> =
-    this.languageService.currentLanguage$.pipe(distinctUntilChanged());
+    this.languageService.currentLanguage$.pipe(
+      distinctUntilChanged(),
+      shareReplay({ bufferSize: 1, refCount: true }),
+    );
 
   public readonly minimumLength: number = 3;
   public readonly searchControl: FormControl<string> = new FormControl<string>('', {
@@ -41,9 +43,9 @@ export class Search {
 
   public readonly queryText$: Observable<string> = this.searchControl.valueChanges.pipe(
     distinctUntilChanged(),
-    debounceTime(600),
+    debounceTime(300),
     map((text: string) => text.trim()),
-    startWith(''),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   public readonly isQueryTooShort$: Observable<boolean> = this.queryText$.pipe(
@@ -88,4 +90,8 @@ export class Search {
         items.length === 0 && !tooShort && text.length >= this.minimumLength,
     ),
   );
+
+  public resetSearchControl(): void {
+    this.searchControl.reset();
+  }
 }
