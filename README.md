@@ -4,6 +4,8 @@ O **Claquete (CLQT)** é um SPA em **Angular 20** para explorar o catálogo do *
 
 ---
 
+[![wakatime](https://wakatime.com/badge/user/d66fe803-196c-4729-b330-f8a026db44ec/project/d2d7344b-79c7-408e-9cd8-1cff8f166aad.svg)](https://wakatime.com/badge/user/d66fe803-196c-4729-b330-f8a026db44ec/project/d2d7344b-79c7-408e-9cd8-1cff8f166aad)
+
 ## 🧩 Funcionalidades
 
 - **Explorar por tipo** (Filmes/Séries) e **categorias** (Popular, Top Rated, Now Playing/Upcoming, Airing/On TV).
