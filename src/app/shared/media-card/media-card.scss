@@ -1,11 +1,12 @@
 @use '../../../variaveis' as *;
 
-:host { 
-  display: block; 
+:host {
+  display: block;
 }
 
 .card {
   display: flex;
+  position: relative;
   flex-direction: column;
   width: 240px;
   height: 470px;
@@ -18,7 +19,7 @@
   &:hover {
     transform: scale(1.01);
   }
-  
+
   &:hover .title {
     color: $hover-titulo;
   }
@@ -48,6 +49,18 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   transition: $transicao-rapida;
+}
+
+.fav-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0 6px 6px 0;
+  background: transparent;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .infos {

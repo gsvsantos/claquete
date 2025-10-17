@@ -204,7 +204,7 @@ export class TMDBService {
         mediaType: 'movie',
         title: result.title,
         subtitle: result.release_date ?? null,
-        posterUrl: this.buildPosterUrl(result.poster_path),
+        posterUrl: this.buildPosterUrl('w92', result.poster_path),
         routerLink: ['/', 'movie', 'details', String(result.id)],
       };
     }
@@ -213,14 +213,10 @@ export class TMDBService {
       mediaType: 'tv',
       title: result.name,
       subtitle: result.first_air_date ?? null,
-      posterUrl: this.buildPosterUrl(result.poster_path),
+      posterUrl: this.buildPosterUrl('w92', result.poster_path),
       routerLink: ['/', 'tv', 'details', String(result.id)],
     };
   };
-
-  private buildPosterUrl(path: TMDBImagePath): string | null {
-    return path ? `https://image.tmdb.org/t/p/w92/${path}` : null;
-  }
 
   private mapMediaDetailsFromList(obj: TMDBApiMediaListDetailsResponse, mediaType: string): Media {
     let routerLink = [''];
@@ -238,7 +234,7 @@ export class TMDBService {
       id: obj.id,
       title: obj.title,
       name: obj.name,
-      poster_path: obj.poster_path,
+      poster_path: this.buildPosterUrl('w500', obj.poster_path),
       release_date: obj.release_date ?? null,
       first_air_date: obj.first_air_date ?? null,
       vote_average: obj.vote_average,
@@ -265,7 +261,7 @@ export class TMDBService {
       id: obj.id,
       title: obj.title,
       name: obj.name,
-      poster_path: obj.poster_path,
+      poster_path: this.buildPosterUrl('w500', obj.poster_path),
       release_date: obj.release_date ?? null,
       first_air_date: obj.first_air_date ?? null,
       vote_average: obj.vote_average,
@@ -283,5 +279,9 @@ export class TMDBService {
       credits: obj.credits,
       videos: obj.videos,
     };
+  }
+
+  private buildPosterUrl(width: string, path: TMDBImagePath): string | null {
+    return path ? `https://image.tmdb.org/t/p/${width}/${path}` : null;
   }
 }

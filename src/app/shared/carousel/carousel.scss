@@ -16,6 +16,7 @@
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  mask-image: mask-gradient(right, 24px, 24px);
 }
 
 .nav-button {

@@ -35,3 +35,40 @@
 .empty {
   opacity: 0.85;
 }
+
+@media (max-width: 1800px) {
+  .medias-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 1600px) {
+  .medias-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1280px) {
+  .medias-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 982px) {
+  .medias-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .medias-list {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
+}
+@media (max-width: 482px) {
+  .medias-list {
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+  }
+}

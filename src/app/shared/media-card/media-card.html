@@ -3,11 +3,24 @@
     <a class="media-link" [routerLink]="media.routerLink">
       <img
         class="poster"
-        [src]="'https://image.tmdb.org/t/p/w500/' + media.poster_path"
+        [src]="media.poster_path"
         [alt]="media.title ?? media.name"
         loading="lazy"
       />
     </a>
+    <gs-buttons
+      class="fav-btn"
+      [buttonType]="buttonType.Default"
+      text=""
+      buttonHtmlType="button"
+      [variant]="media.favorite ? variantType.Solid : variantType.Outline"
+      [bootstrapIcon]="media.favorite ? 'bi-heart-fill' : 'bi-heart'"
+      buttonId="fav-btn"
+      color="#ff5a79"
+      [textColor]="media.favorite ? '#fff' : ''"
+      (activated)="onToggleFavorite(media)"
+    >
+    </gs-buttons>
     <div class="text">
       <h1 class="title">{{ media.title ?? media.name }}</h1>
       <div class="infos">

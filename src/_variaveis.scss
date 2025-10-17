@@ -40,3 +40,13 @@ $gradient-navbar: linear-gradient(90deg, #052030, #05273a);
 $gradient-footer: linear-gradient(90deg, #071e2e, #052236);
 
 $sidebar-borda-largura: 3px;
+
+@function mask-gradient($dir, $leftpx, $rightpx) {
+  @return linear-gradient(
+    to $dir,
+    transparent,
+    #000 $leftpx,
+    #000 calc(100% - $rightpx),
+    transparent
+  );
+}
