@@ -1,10 +1,38 @@
 <div *transloco="let t">
-  <input
-    class="search-input"
-    [formControl]="searchControl"
-    [placeholder]="t('search.placeholder')"
-    autocomplete="true"
-  />
+  <div class="search-container" [class.has-value]="queryText$ | async">
+    <input
+      class="search-input"
+      [formControl]="searchControl"
+      [placeholder]="t('search.placeholder')"
+      autocomplete="on"
+      (keyup.enter)="search()"
+      (keyup.escape)="resetSearchControl()"
+    />
+    <gs-buttons
+      class="btn-clear"
+      [buttonType]="buttonType.Default"
+      text=""
+      bootstrapIcon="bi-x"
+      color="transparent"
+      hoverColor="transparent"
+      [transitionProperties]="['background-color', 'box-shadow']"
+      [transitionDuration]="200"
+      [transitionEase]="'ease-in-out'"
+      (click)="resetSearchControl()"
+    ></gs-buttons>
+    <gs-buttons
+      class="btn-search"
+      [buttonType]="buttonType.Default"
+      text=""
+      bootstrapIcon="bi-search"
+      color="transparent"
+      hoverColor="transparent"
+      [transitionProperties]="['background-color', 'box-shadow']"
+      [transitionDuration]="200"
+      [transitionEase]="'ease-in-out'"
+      (click)="search()"
+    ></gs-buttons>
+  </div>
 
   @if (isLoading$ | async) {
     <p class="hint">{{ t('common.messages.loading') }}</p>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,15 +16,21 @@ import { TMDBService } from '../../services/tmdb.service';
 import { LanguageService, TmdbLanguageCode } from '../../services/language.service';
 import { SearchItemView, TMDBApiSearchMultiResponse } from '../../models/tmdb-api';
 import { TranslocoModule } from '@jsverse/transloco';
+import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 
 @Component({
   selector: 'clqt-search',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslocoModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslocoModule, GsButtons],
   templateUrl: './search.html',
   styleUrl: './search.scss',
 })
 export class Search {
+  @Output() protected searchPerformed = new EventEmitter<string>();
+  public buttonType = gsButtonTypeEnum;
+  public targetType = gsTabTargetEnum;
+  public variantType = gsVariant;
+
   private readonly tMDBService = inject(TMDBService);
   private readonly languageService = inject(LanguageService);
   private readonly languageCode$: Observable<TmdbLanguageCode> =
@@ -90,6 +96,15 @@ export class Search {
         items.length === 0 && !tooShort && text.length >= this.minimumLength,
     ),
   );
+
+  public search(): void {
+    const currentValue = this.searchControl.value.trim();
+
+    if (currentValue && currentValue.length >= this.minimumLength) {
+      this.searchPerformed.emit(currentValue);
+      this.resetSearchControl();
+    }
+  }
 
   public resetSearchControl(): void {
     this.searchControl.reset();
