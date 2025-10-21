@@ -112,5 +112,13 @@
       "movie": "Filme",
       "tv-show": "Série"
     }
+  },
+
+  "search-page": {
+    "searched": "{{ text }}",
+    "section-title": {
+      "movies": "Filmes",
+      "tv-shows": "Séries"
+    }
   }
 }
