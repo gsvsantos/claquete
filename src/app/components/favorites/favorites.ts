@@ -22,11 +22,11 @@ export class Favorites {
     this.favoriteMedias$.pipe(
       map((items: Media[]) => {
         const movies: Media[] = items
-          .filter((media) => media.mediaType === 'movie')
+          .filter((media) => media.media_type === 'movie')
           .sort((first, second) => first.id - second.id);
 
         const tvShows: Media[] = items
-          .filter((media) => media.mediaType === 'tv')
+          .filter((media) => media.media_type === 'tv')
           .sort((first, second) => first.id - second.id);
 
         return { movies, tvShows };

@@ -1,0 +1,61 @@
+@use '../../../variaveis' as *;
+
+.main {
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1560px;
+  margin: 0 auto;
+  background: $gradient-background;
+}
+
+.medias-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+@media (max-width: 1800px) {
+  .medias-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 1600px) {
+  .medias-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1280px) {
+  .medias-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 982px) {
+  .medias-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .medias-list {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
+}
+@media (max-width: 482px) {
+  .medias-list {
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+  }
+}

@@ -50,6 +50,11 @@ export const routes: Routes = [
     title: 'Not Authorized',
   },
   {
+    path: 'search',
+    loadComponent: () =>
+      import('../components/search-page/search-page').then((component) => component.SearchPage),
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('../components/not-found/not-found').then((component) => component.NotFound),

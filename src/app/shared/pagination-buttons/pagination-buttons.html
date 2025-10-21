@@ -1,0 +1,15 @@
+<section class="buttons">
+  @for (page of availablePages?.pages; track $index) {
+    <gs-buttons
+      class="btn-page"
+      [buttonType]="buttonType.Default"
+      [text]="page.toString()"
+      [variant]="availablePages?.actualPage === page ? variantType.Solid : variantType.Outline"
+      color="#41C8D5"
+      textColor="#FFFFFF"
+      hoverColor="#12AFC0"
+      activeColor="#29BBCA"
+      (click)="requiredPage.emit(page)"
+    ></gs-buttons>
+  }
+</section>

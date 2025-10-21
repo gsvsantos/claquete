@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  private readonly toastService = inject(ToastrService)
+  private readonly toastService = inject(ToastrService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser: boolean = isPlatformBrowser(this.platformId);
 
@@ -25,7 +25,18 @@ export class LocalStorageService {
 
     try {
       const items: Media[] = JSON.parse(jsonString) as Media[];
-      this.favoritesMediaSubject.next(items);
+      const seenKeys = new Set<string>();
+      const normalized: Media[] = items
+        .map((item: Media): Media => ({ ...item, favorite: true }))
+        .filter((item: Media): boolean => {
+          const key = `${item.media_type}:${item.id}`;
+          if (seenKeys.has(key)) return false;
+          seenKeys.add(key);
+          return true;
+        });
+
+      this.favoritesMediaSubject.next(normalized);
+      localStorage.setItem(this.key, JSON.stringify(normalized));
     } catch {
       localStorage.removeItem(this.key);
     }
@@ -33,23 +44,34 @@ export class LocalStorageService {
 
   public changeMediaStatus(media: Media): void {
     const actualFavorites: Media[] = this.favoritesMediaSubject.getValue();
-    const nextFavorites: Media[] = [...actualFavorites];
+    const isSameEntry = (media: Media): boolean =>
+      media.id === media.id && media.media_type === media.media_type;
 
     if (media.favorite) {
       media.favorite = false;
       this.toastService.success('Removed from favorites');
-      const index: number = nextFavorites.findIndex((_media) => _media.id === media.id);
-      if (index > -1) nextFavorites.splice(index, 1);
-    } else {
-      media.favorite = true;
-      this.toastService.success('Added to favorites');
-      nextFavorites.push(media);
+
+      const nextFavorites: Media[] = actualFavorites.filter((media: Media) => !isSameEntry(media));
+
+      this.favoritesMediaSubject.next(nextFavorites);
+      if (this.isBrowser) localStorage.setItem(this.key, JSON.stringify(nextFavorites));
+      return;
     }
 
+    media.favorite = true;
+    this.toastService.success('Added to favorites');
+
+    const alreadyExists: boolean = actualFavorites.some(isSameEntry);
+    const normalizedMedia: Media = { ...media, favorite: true };
+
+    const nextFavorites: Media[] = alreadyExists
+      ? actualFavorites.map((media: Media) =>
+          isSameEntry(media) ? { ...media, ...normalizedMedia } : media,
+        )
+      : [...actualFavorites, normalizedMedia];
+
     this.favoritesMediaSubject.next(nextFavorites);
-    if (this.isBrowser) {
-      localStorage.setItem(this.key, JSON.stringify(nextFavorites));
-    }
+    if (this.isBrowser) localStorage.setItem(this.key, JSON.stringify(nextFavorites));
   }
 
   public getFavorites(): Observable<Media[]> {
@@ -65,13 +87,17 @@ export class LocalStorageService {
   }
 
   public setFavorites(updatedFavorites: Media[]): void {
-    const normalizedFavorites: Media[] = updatedFavorites.map(
-      (media: Media): Media => ({ ...media, favorite: true }),
-    );
+    const seenKeys = new Set<string>();
+    const normalizedFavorites: Media[] = updatedFavorites
+      .map((item: Media): Media => ({ ...item, favorite: true }))
+      .filter((item: Media): boolean => {
+        const key = `${item.media_type}:${item.id}`;
+        if (seenKeys.has(key)) return false;
+        seenKeys.add(key);
+        return true;
+      });
 
     this.favoritesMediaSubject.next(normalizedFavorites);
-    if (this.isBrowser) {
-      localStorage.setItem(this.key, JSON.stringify(normalizedFavorites));
-    }
+    if (this.isBrowser) localStorage.setItem(this.key, JSON.stringify(normalizedFavorites));
   }
 }

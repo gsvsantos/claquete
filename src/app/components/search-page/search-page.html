@@ -1,0 +1,28 @@
+<div class="main">
+  <div class="content" *transloco="let t; prefix: 'search-page'">
+    <h1>{{ t('searched', { text: queryParam$ | async }) | titlecase }}</h1>
+    <div class="movies">
+      <h3 class="section-title">{{ t('section-title.movies') }}</h3>
+      <div class="medias-list">
+        @for (media of moviesSelected$ | async; track $index) {
+          <clqt-media-card [media]="media"></clqt-media-card>
+        }
+      </div>
+    </div>
+    <div class="tvShows">
+      <h3 class="section-title">{{ t('section-title.tv-shows') }}</h3>
+      <div class="medias-list">
+        @for (media of tvShowsSelected$ | async; track $index) {
+          <clqt-media-card [media]="media"></clqt-media-card>
+        }
+      </div>
+    </div>
+    <div class="availablePages">
+      @if (availablePages$ | async; as availablePages) {
+        <clqt-pagination-buttons
+          (requiredPage)="pageSubject$.next($event)" [availablePages]="availablePages"
+        ></clqt-pagination-buttons>
+      }
+    </div>
+  </div>
+</div>

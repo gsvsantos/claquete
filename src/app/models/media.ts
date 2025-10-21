@@ -1,4 +1,10 @@
-import { TMDBImagePath, TMDBApiGenre, TMDBApiBelongsToCollection, TMDBApiVideos, TMDBApiCredits } from './tmdb-api';
+import {
+  TMDBImagePath,
+  TMDBApiGenre,
+  TMDBApiBelongsToCollection,
+  TMDBApiVideos,
+  TMDBApiCredits,
+} from './tmdb-api';
 
 export enum MediaTypes {
   Movie = 'movie',
@@ -6,7 +12,7 @@ export enum MediaTypes {
 }
 
 export interface Media {
-  mediaType: string;
+  media_type: string;
   routerLink: string[];
   favorite: boolean;
   id: number;

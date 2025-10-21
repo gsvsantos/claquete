@@ -87,7 +87,7 @@
       </div>
       <div class="tools">
         <div class="search">
-          <clqt-search />
+          <clqt-search (searchPerformed)="search($event)"/>
         </div>
         <div class="auth">
           <!-- <h1><i class="bi bi-person"></i></h1> Implementar auth via TMDB-->

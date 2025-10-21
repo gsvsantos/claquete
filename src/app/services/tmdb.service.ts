@@ -14,16 +14,14 @@ import {
   toArray,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Media, ThisMediaDetails } from '../models/media';
+import { Media, MediaTypes, ThisMediaDetails } from '../models/media';
 import {
   SearchItemView,
   TMDBApiMediaDetailsResponse,
   TMDBApiMediaListDetailsResponse,
   TMDBApiMediaListResponse,
-  TMDBApiSearchMovieResult,
+  TMDBApiSearchMediaResult,
   TMDBApiSearchMultiResponse,
-  TMDBApiSearchResult,
-  TMDBApiSearchTvResult,
   TMDBAuthenticationResponse,
   TMDBImagePath,
 } from '../models/tmdb-api';
@@ -88,17 +86,66 @@ export class TMDBService {
     const url: string = `${this.baseUrl}/search/multi`;
     const cacheKey: string = this.buildCacheKey(url, params);
     const cached = this.cache.get<TMDBApiSearchMultiResponse>(cacheKey);
-    if (cached !== undefined) return of(cached);
+    if (cached !== undefined) {
+      const favoriteIds = new Set(this.local.getFavoritesSnapshot().map((media) => media.id));
+
+      return of({
+        ...cached,
+        results: cached.results.map(
+          (item): TMDBApiSearchMediaResult => ({
+            ...item,
+            favorite: favoriteIds.has(item.id),
+          }),
+        ),
+      });
+    }
 
     return this.http
       .get<TMDBApiSearchMultiResponse>(url, {
         headers: { Authorization: environment.apiKey, Accept: 'application/json' },
         params,
       })
-      .pipe(tap((res) => this.cache.put(cacheKey, res)));
+      .pipe(
+        map((api): TMDBApiSearchMultiResponse => {
+          const favoriteIds = new Set(
+            this.local.getFavoritesSnapshot().map((media: Media) => media.id),
+          );
+          return {
+            ...api,
+            results: api.results.map(
+              (item): TMDBApiSearchMediaResult => ({
+                ...item,
+                favorite: favoriteIds.has(item.id),
+              }),
+            ),
+          };
+        }),
+        tap((res) => this.cache.put(cacheKey, res)),
+      );
   }
 
-  public mapMultiSearchToResult(results: TMDBApiSearchResult[]): SearchItemView[] {
+  public mapMediasSearchResult(response: TMDBApiSearchMultiResponse): TMDBApiSearchMultiResponse {
+    return {
+      ...response,
+      results: response.results.map<TMDBApiSearchMediaResult>((y) =>
+        y.media_type === MediaTypes.Movie
+          ? {
+              ...y,
+              media_type: MediaTypes.Movie,
+              vote_average: y.vote_average,
+              poster_path: this.buildPosterUrl('w500', y.poster_path),
+            }
+          : {
+              ...y,
+              media_type: MediaTypes.TV,
+              vote_average: y.vote_average,
+              poster_path: this.buildPosterUrl('w500', y.poster_path),
+            },
+      ),
+    };
+  }
+
+  public mapMultiSearchToResult(results: TMDBApiSearchMediaResult[]): SearchItemView[] {
     return results.filter(this.isMovieOrTv).map(this.mapResultToView);
   }
 
@@ -176,7 +223,7 @@ export class TMDBService {
     if (currentFavorites.length === 0) return of(void 0);
 
     const uniqueMap: Map<string, Media> = new Map(
-      currentFavorites.map((media: Media) => [`${media.mediaType}:${media.id}`, media]),
+      currentFavorites.map((media: Media) => [`${media.media_type}:${media.id}`, media]),
     );
     const favoritesToFetch: Media[] = Array.from(uniqueMap.values());
 
@@ -185,7 +232,7 @@ export class TMDBService {
     return from(favoritesToFetch).pipe(
       mergeMap(
         (favoriteMedia: Media) =>
-          this.getMediaDetailsByID(favoriteMedia.mediaType, favoriteMedia.id).pipe(
+          this.getMediaDetailsByID(favoriteMedia.media_type, favoriteMedia.id).pipe(
             catchError(() => of<Media>({ ...favoriteMedia, favorite: true })),
           ),
         maxCurrentRequests,
@@ -199,17 +246,15 @@ export class TMDBService {
   }
 
   private readonly isMovieOrTv = (
-    result: TMDBApiSearchResult,
-  ): result is TMDBApiSearchMovieResult | TMDBApiSearchTvResult =>
-    result.media_type === 'movie' || result.media_type === 'tv';
+    result: TMDBApiSearchMediaResult,
+  ): result is TMDBApiSearchMediaResult =>
+    result.media_type === MediaTypes.Movie || result.media_type === MediaTypes.TV;
 
-  private readonly mapResultToView = (
-    result: TMDBApiSearchMovieResult | TMDBApiSearchTvResult,
-  ): SearchItemView => {
-    if (result.media_type === 'movie') {
+  private readonly mapResultToView = (result: TMDBApiSearchMediaResult): SearchItemView => {
+    if (result.media_type === MediaTypes.Movie) {
       return {
         id: result.id,
-        mediaType: 'movie',
+        mediaType: MediaTypes.Movie,
         title: result.title,
         subtitle: result.release_date ?? null,
         posterUrl: this.buildPosterUrl('w92', result.poster_path),
@@ -218,7 +263,7 @@ export class TMDBService {
     }
     return {
       id: result.id,
-      mediaType: 'tv',
+      mediaType: MediaTypes.TV,
       title: result.name,
       subtitle: result.first_air_date ?? null,
       posterUrl: this.buildPosterUrl('w92', result.poster_path),
@@ -236,7 +281,7 @@ export class TMDBService {
     }
 
     return {
-      mediaType: mediaType,
+      media_type: mediaType,
       routerLink: routerLink,
       favorite: false,
       id: obj.id,
@@ -263,7 +308,7 @@ export class TMDBService {
     }
 
     return {
-      mediaType: mediaType,
+      media_type: mediaType,
       routerLink: routerLink,
       favorite: false,
       id: obj.id,

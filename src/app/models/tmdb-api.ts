@@ -1,3 +1,5 @@
+import { MediaTypes } from './media';
+
 // Bases
 export interface TMDBAuthenticationResponse {
   status_code: number;
@@ -216,53 +218,32 @@ export interface TMDBApiMediaDetailsResponse {
   credits?: TMDBApiCredits;
 }
 
-export type TMDBApiMediaSearchType = 'movie' | 'tv' | 'person';
-
 export interface SearchItemView {
   id: number;
-  mediaType: 'movie' | 'tv';
-  title: string;
+  mediaType: MediaTypes;
+  title?: string;
   subtitle: string | null;
   posterUrl: string | null;
   routerLink: string[];
 }
 
-export interface TMDBApiSearchMovieResult {
-  media_type: 'movie';
+export interface TMDBApiSearchMediaResult {
+  media_type: MediaTypes;
+  routerLink: string[];
+  favorite: boolean;
   id: number;
-  title: string;
-  overview: string;
+  title?: string;
+  name?: string;
   poster_path: TMDBImagePath;
-  release_date: string | null;
+  release_date?: string | null;
+  first_air_date?: string | null;
   vote_average: number;
-}
-
-export interface TMDBApiSearchTvResult {
-  media_type: 'tv';
-  id: number;
-  name: string;
   overview: string;
-  poster_path: TMDBImagePath;
-  first_air_date: string | null;
-  vote_average: number;
 }
-
-export interface TMDBApiSearchPersonResult {
-  media_type: 'person';
-  id: number;
-  name: string;
-  profile_path: TMDBImagePath;
-  known_for_department?: string | null;
-}
-
-export type TMDBApiSearchResult =
-  | TMDBApiSearchMovieResult
-  | TMDBApiSearchTvResult
-  | TMDBApiSearchPersonResult;
 
 export interface TMDBApiSearchMultiResponse {
   page: number;
-  results: TMDBApiSearchResult[];
+  results: TMDBApiSearchMediaResult[];
   total_pages: number;
   total_results: number;
 }
