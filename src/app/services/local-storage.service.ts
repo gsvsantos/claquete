@@ -44,8 +44,8 @@ export class LocalStorageService {
 
   public changeMediaStatus(media: Media): void {
     const actualFavorites: Media[] = this.favoritesMediaSubject.getValue();
-    const isSameEntry = (media: Media): boolean =>
-      media.id === media.id && media.media_type === media.media_type;
+    const isSameEntry = (media2: Media): boolean =>
+      media.id === media2.id && media.media_type === media2.media_type;
 
     if (media.favorite) {
       media.favorite = false;

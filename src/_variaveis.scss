@@ -6,7 +6,7 @@ $primaria: #006da4;
 $primaria-active: #006494;
 
 $pagina-ativa: color.adjust($primaria, $lightness: 10%);
-$pagina-ativa-sombra: color.adjust($primaria, $lightness: -12%); // escurece 12%
+$pagina-ativa-sombra: color.adjust($primaria, $lightness: -12%);
 
 $hover: color.adjust($primaria, $lightness: 18%);
 $hover-titulo: color.adjust($primaria, $lightness: 25%);
@@ -17,7 +17,7 @@ $superficie-destaque: #004d74;
 $borda: #0f5b86;
 
 $texto-principal: $branco;
-$texto-suave: color.mix($branco, $superficie, $weight: 85%); // 85% do $branco
+$texto-suave: color.mix($branco, $superficie, $weight: 85%);
 $texto-invertido: #000000;
 
 $perigo: #e53935;
