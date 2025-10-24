@@ -1,4 +1,3 @@
-// token-is-valid.guard.ts
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';

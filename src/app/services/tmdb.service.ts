@@ -132,12 +132,14 @@ export class TMDBService {
           ? {
               ...y,
               media_type: MediaTypes.Movie,
+              routerLink: ['/', 'movie', 'details', String(y.id)],
               vote_average: y.vote_average,
               poster_path: this.buildPosterUrl('w500', y.poster_path),
             }
           : {
               ...y,
               media_type: MediaTypes.TV,
+              routerLink: ['/', 'tv', 'details', String(y.id)],
               vote_average: y.vote_average,
               poster_path: this.buildPosterUrl('w500', y.poster_path),
             },

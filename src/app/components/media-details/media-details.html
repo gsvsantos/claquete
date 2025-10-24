@@ -157,7 +157,14 @@
         </div>
       </div>
     } @else {
-      <p class="empty required" [innerHTML]="t('common.messages.select-media-to-see-details')"></p>
+      <p
+        class="empty required"
+        [innerHTML]="
+          t('common.messages.nothing-found') +
+          ' ' +
+          t('common.messages.select-media-to-see-details')
+        "
+      ></p>
     }
   </div>
 </div>
